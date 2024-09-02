@@ -1,0 +1,116 @@
+/* src/components/Navbar.css */
+
+/* Basic Navbar Styles */
+.navbar {
+    background-color: #f8f9fa; /* Light background color */
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e5e5; /* Subtle border */
+}
+
+.navbar-brand img {
+    height: 40px; /* Consistent logo height */
+}
+
+.navbar-toggler {
+    border: none; /* Remove border */
+    outline: none; /* Remove outline */
+}
+
+.navbar-toggler-icon {
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30"%3E%3Cpath stroke="%23666" stroke-width="2" d="M5 7h20M5 15h20M5 23h20"%3E%3C/path%3E%3C/svg%3E');
+}
+
+/* Navbar Items */
+.navbar-nav .nav-item {
+    margin-left: 15px; /* Space between items */
+}
+
+.nav-link {
+    color: #333; /* Text color */
+    font-size: 16px; /* Font size */
+    font-weight: 500; /* Font weight */
+    text-transform: uppercase; /* Uppercase text */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.nav-link:hover {
+    color: #e83e8c; /* Hover color */
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    background-color: #fff; /* Background color */
+    border: 1px solid #ddd; /* Border color */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Shadow for dropdown */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.dropdown-item {
+    font-size: 14px; /* Font size */
+    color: #333; /* Text color */
+    padding: 10px 15px; /* Padding */
+    transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa; /* Hover background color */
+}
+
+/* Search Icon */
+#searchIcon {
+    font-size: 20px; /* Icon size */
+    color: #333; /* Icon color */
+    cursor: pointer; /* Pointer cursor */
+}
+
+#searchIcon:hover {
+    color: #e83e8c; /* Hover color */
+}
+
+/* Modal Styles */
+/* Navbar.scss */
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed position */
+    top: 0; /* Top of the viewport */
+    left: 0; /* Left of the viewport */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000; /* Ensure it's on top */
+    justify-content: center; /* Center the modal */
+    align-items: center; /* Center the modal */
+}
+
+.modal.show {
+    display: flex; /* Show modal */
+}
+
+.modal-content {
+    background-color: #fff; /* Modal background color */
+    padding: 20px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    width: 90%; /* Responsive width */
+    max-width: 500px; /* Max width */
+    position: relative; /* Ensure positioning of close button */
+}
+
+.close {
+    font-size: 24px; /* Font size */
+    color: #333; /* Color */
+    float: right; /* Float right */
+    cursor: pointer; /* Pointer cursor */
+}
+
+.close:hover {
+    color: #e83e8c; /* Hover color */
+}
+
+.modal-content input[type="text"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding */
+    border: 1px solid #ddd; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+}

@@ -1,0 +1,45 @@
+.banner {
+    padding: 60px 0;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .banner__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    color: #fff;
+    background-color: #cbbdbd;
+  }
+  
+  .banner__text {
+    text-align: center;
+  }
+  
+  .banner__text span {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .banner__text h1 {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .banner__text a {
+    text-decoration: none;
+    padding: 10px 20px;
+    background: #d00;
+    color: #fff;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+  
+  .banner__text a:hover {
+    background: #b00;
+  }
+  

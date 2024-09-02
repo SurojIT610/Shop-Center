@@ -1,0 +1,45 @@
+/* InstagramFeed.scss */
+
+.instagram {
+    padding: 30px 0; /* Adjust padding as needed */
+}
+
+.instagram__item {
+    position: relative;
+    height: 100px; /* Adjust height as needed */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.instagram__item:hover {
+    opacity: 0.8; /* Change opacity on hover */
+}
+
+.instagram__text {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.instagram__text i {
+    font-size: 20px; /* Icon size */
+    margin-right: 5px; /* Space between icon and text */
+}
+
+.instagram__text a {
+    font-size: 14px; /* Text size */
+    color: #fff; /* Text color */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s ease;
+}
+
+.instagram__text a:hover {
+    color: #e83e8c; /* Hover color */
+}

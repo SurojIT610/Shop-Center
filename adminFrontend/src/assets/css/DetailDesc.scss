@@ -1,0 +1,36 @@
+/* DetailDesc.scss */
+
+.services {
+    padding: 80px 0; /* Adjust padding as needed */
+}
+
+.services__item {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd; /* Border style */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #fff; /* Background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    transition: all 0.3s ease; /* Transition for hover effect */
+}
+
+.services__item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+.services__item i {
+    font-size: 40px; /* Icon size */
+    color: #e83e8c; /* Icon color */
+    margin-bottom: 10px; /* Space below icon */
+}
+
+.services__item h6 {
+    font-size: 18px; /* Heading size */
+    font-weight: bold; /* Font weight */
+    margin-bottom: 10px; /* Space below heading */
+}
+
+.services__item p {
+    font-size: 14px; /* Paragraph size */
+    color: #666; /* Paragraph color */
+}
