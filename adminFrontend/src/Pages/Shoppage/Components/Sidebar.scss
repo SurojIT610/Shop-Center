@@ -1,0 +1,26 @@
+/* Sidebar.css */
+.shop__sidebar {
+    margin-bottom: 30px;
+  }
+  
+  .sidebar__categories .accordion {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar__filter {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar__sizes, .sidebar__color {
+    margin-bottom: 20px;
+  }
+  
+  .size__list label, .color__list label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .size__list input[type="checkbox"], .color__list input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  

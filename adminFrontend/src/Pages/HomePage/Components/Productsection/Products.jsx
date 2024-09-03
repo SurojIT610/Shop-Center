@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/css/productsection.scss';
+import '../../../../assets/css/productsection.scss';
 
 const Products = () => {
   return (

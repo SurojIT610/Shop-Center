@@ -1,15 +1,15 @@
 import React from 'react';
-import '../../assets/css/InstagramFeed.scss'; // Import the CSS for styling
+import '../../../..//assets/css/InstagramFeed.scss'; // Import the CSS for styling
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 // Define an array of image URLs for the Instagram feed
 const images = [
-    '../../src/assets/img/instagram/insta-1.jpg',
-    '../../src/assets/img/instagram/insta-2.jpg',
-    '../../src/assets/img/instagram/insta-3.jpg',
-    '../../src/assets/img/instagram/insta-4.jpg',
-    '../../src/assets/img/instagram/insta-5.jpg',
-    '../../src/assets/img/instagram/insta-6.jpg'
+    '../../../../src/assets/img/instagram/insta-1.jpg',
+    '../../../../src/assets/img/instagram/insta-2.jpg',
+    '../../../../src/assets/img/instagram/insta-3.jpg',
+    '../../../../src/assets/img/instagram/insta-4.jpg',
+    '../../../../src/assets/img/instagram/insta-5.jpg',
+    '../../../../src/assets/img/instagram/insta-6.jpg'
 ];
 
 const InstagramFeed = () => {

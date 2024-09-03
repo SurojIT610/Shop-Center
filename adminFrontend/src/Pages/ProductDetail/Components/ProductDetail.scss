@@ -1,0 +1,24 @@
+/* src/components/ProductDetailSection/ProductDetailSection.css */
+
+.product-details {
+    padding: 60px 0;
+}
+
+.product-details .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-details .row {
+    margin-bottom: 30px;
+}
+
+.product-details .related__title {
+    margin-bottom: 30px;
+}
+
+.product-details .related__title h5 {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+}

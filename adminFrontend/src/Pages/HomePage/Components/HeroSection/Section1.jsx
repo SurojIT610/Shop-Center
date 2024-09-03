@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../assets/css/customcss.scss'; // Import your custom CSS
-import category1 from '../../assets/img/categories/category-1.jpg';
-import category2 from '../../assets/img/categories/category-2.jpg';
-import category3 from '../../assets/img/categories/category-3.jpg';
-import category4 from '../../assets/img/categories/category-4.jpg';
-import category5 from '../../assets/img/categories/category-5.jpg';
+import '../../../../assets/css/customcss.scss'; // Import your custom CSS
+import category1 from '../../../../assets/img/categories/category-1.jpg';
+import category2 from '../../../../assets/img/categories/category-2.jpg';
+import category3 from '../../../../assets/img/categories/category-3.jpg';
+import category4 from '../../../../assets/img/categories/category-4.jpg';
+import category5 from '../../../../assets/img/categories/category-5.jpg';
 
 const Section1 = () => {
     return (

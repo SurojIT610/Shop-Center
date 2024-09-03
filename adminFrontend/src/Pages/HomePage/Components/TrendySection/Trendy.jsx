@@ -1,18 +1,18 @@
 // src/components/Trendy.jsx
 
 import React from 'react';
-import '../../assets/css/Trendy.scss'; // Import the CSS file
+import '../../../../assets/css/Trendy.scss'; // Import the CSS file
 
 // Import images
-import ht1 from '../../assets/img/trend/ht-1.jpg';
-import ht2 from '../../assets/img/trend/ht-2.jpg';
-import ht3 from '../../assets/img/trend/ht-3.jpg';
-import bs1 from '../../assets/img/trend/bs-1.jpg';
-import bs2 from '../../assets/img/trend/bs-2.jpg';
-import bs3 from '../../assets/img/trend/bs-3.jpg';
-import f1 from '../../assets/img/trend/f-1.jpg';
-import f2 from '../../assets/img/trend/f-2.jpg';
-import f3 from '../../assets/img/trend/f-3.jpg';
+import ht1 from '../../../../assets/img/trend/ht-1.jpg';
+import ht2 from '../../../../assets/img/trend/ht-2.jpg';
+import ht3 from '../../../../assets/img/trend/ht-3.jpg';
+import bs1 from '../../../../assets/img/trend/bs-1.jpg';
+import bs2 from '../../../../assets/img/trend/bs-2.jpg';
+import bs3 from '../../../../assets/img/trend/bs-3.jpg';
+import f1 from '../../../../assets/img/trend/f-1.jpg';
+import f2 from '../../../../assets/img/trend/f-2.jpg';
+import f3 from '../../../../assets/img/trend/f-3.jpg';
 
 const Trendy = () => {
     return (

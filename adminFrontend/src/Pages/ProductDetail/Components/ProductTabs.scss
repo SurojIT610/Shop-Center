@@ -1,0 +1,39 @@
+/* src/components/ProductDetailSection/ProductTabs.css */
+
+.product__details__tab {
+    margin-top: 40px;
+}
+
+.product__details__tab .nav-tabs {
+    margin-bottom: 20px;
+}
+
+.product__details__tab .nav-tabs .nav-link {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #333;
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.product__details__tab .nav-tabs .nav-link.active {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+}
+
+.product__details__tab .tab-content {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.product__details__tab .tab-pane h6 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.product__details__tab .tab-pane p {
+    line-height: 1.6;
+}

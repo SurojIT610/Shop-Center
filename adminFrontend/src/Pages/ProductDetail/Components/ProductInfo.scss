@@ -1,0 +1,103 @@
+/* src/components/ProductDetailSection/ProductInfo.css */
+
+.product__details__text {
+    padding: 20px;
+}
+
+.product__details__text h3 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product__details__text .rating {
+    margin-bottom: 10px;
+}
+
+.product__details__text .rating i {
+    color: #f4c150;
+}
+
+.product__details__price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.product__details__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.product__details__button .quantity {
+    display: flex;
+    align-items: center;
+}
+
+.product__details__button .pro-qty {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.product__details__button .pro-qty input {
+    width: 40px;
+    text-align: center;
+}
+
+.product__details__button a.cart-btn {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.product__details__button a.cart-btn:hover {
+    background-color: #555;
+}
+
+.product__details__widget {
+    margin-top: 20px;
+}
+
+.product__details__widget ul {
+    list-style: none;
+    padding: 0;
+}
+
+.product__details__widget ul li {
+    margin-bottom: 10px;
+}
+
+.product__details__widget .stock__checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.product__details__widget .color__checkbox {
+    display: flex;
+}
+
+.product__details__widget .color__checkbox label {
+    margin-right: 10px;
+}
+
+.product__details__widget .color__checkbox .checkmark {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: #ddd;
+}
+
+.product__details__widget .color__checkbox .black-bg {
+    background-color: #000;
+}
+
+.product__details__widget .color__checkbox .grey-bg {
+    background-color: #ccc;
+}

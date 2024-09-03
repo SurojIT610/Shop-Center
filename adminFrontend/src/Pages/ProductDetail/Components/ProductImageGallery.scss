@@ -1,0 +1,43 @@
+/* src/components/ProductDetailSection/ProductImageGallery.css */
+
+.product__details__pic {
+    position: relative;
+}
+
+.product__details__pic__left {
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.product__thumb {
+    display: flex;
+    flex-direction: column;
+}
+
+.product__thumb .pt {
+    margin-bottom: 10px;
+}
+
+.product__thumb img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.product__details__slider__content {
+    position: relative;
+}
+
+.product__details__pic__slider .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.product__big__img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
