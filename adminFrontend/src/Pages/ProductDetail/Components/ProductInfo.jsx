@@ -1,91 +1,144 @@
-// src/components/ProductDetailSection/ProductInfo.js
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import 'bootstrap/dist/js/bootstrap.bundle.min'; // Import Bootstrap JS with Popper
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './ProductInfo.scss';
 
-const ProductInfo = () => {
+const ProductInfo = ({ product }) => {
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
+
+  // Fallback values to avoid errors if product is not defined or missing properties
+  const colors = product?.colors || [];
+  const sizes = product?.sizes || [];
+
+  const handleQuantityChange = (amount) => {
+    setQuantity(prevQuantity => Math.max(prevQuantity + amount, 1));
+  };
+
+  const handleSizeChange = (size) => {
+    setSelectedSize(size);
+  };
+
+  const handleColorChange = (color) => {
+    setSelectedColor(color);
+  };
+
+  if (!product) {
+    return <div>Loading...</div>; // Handle loading or empty state
+  }
+
   return (
     <div className="product__details__text">
-      <h3>Essential structured blazer <span>Brand: SKMEIMore Men Watches from SKMEI</span></h3>
-      <div className="rating">
-        <i className="fa fa-star"></i>
-        <i className="fa fa-star"></i>
-        <i className="fa fa-star"></i>
-        <i className="fa fa-star"></i>
-        <i className="fa fa-star"></i>
-        <span>( 138 reviews )</span>
+      <h3>{product.name} <span>Brand: {product.brand}</span></h3>
+      <div className="rating mb-3">
+        {Array.from({ length: 5 }, (_, index) => (
+          <i key={index} className={`fa fa-star ${index < Math.round(product.rating) ? "checked" : ""}`}></i>
+        ))}
+        <span> ({product.rating} reviews)</span>
       </div>
-      <div className="product__details__price">$ 75.0 <span>$ 83.0</span></div>
-      <p>Nemo enim ipsam voluptatem quia aspernatur aut odit aut loret fugit, sed quia consequuntur magni lores eos qui ratione voluptatem sequi nesciunt.</p>
-      <div className="product__details__button">
-        <div className="quantity">
+      <div className="product__details__price mb-3">
+        ${product.price} <span>${(product.price * 1.1).toFixed(2)}</span>
+      </div>
+      <p>{product.description}</p>
+      <div className="product__details__button mb-4 d-flex align-items-center justify-content-between">
+        <div className="quantity d-flex align-items-center">
           <span>Quantity:</span>
-          <div className="pro-qty">
-            <span className="dec qtybtn">-</span>
-            <input type="text" value="1" />
-            <span className="inc qtybtn">+</span>
+          <div className="pro-qty ms-2 d-flex align-items-center">
+            <button
+              className="btn btn-outline-secondary qtybtn"
+              onClick={() => handleQuantityChange(-1)}
+            >
+              -
+            </button>
+            <input
+              type="text"
+              value={quantity}
+              className="form-control text-center"
+              readOnly
+            />
+            <button
+              className="btn btn-outline-secondary qtybtn"
+              onClick={() => handleQuantityChange(1)}
+            >
+              +
+            </button>
           </div>
         </div>
-        <a href="#" className="cart-btn"><span className="icon_bag_alt"></span> Add to cart</a>
-        <ul>
-          <li><a href="#"><span className="icon_heart_alt"></span></a></li>
-          <li><a href="#"><span className="icon_adjust-horiz"></span></a></li>
+        <a href="#" className="cart-btn btn btn-dark">
+          <span className="icon_bag_alt"></span> Add to cart
+        </a>
+        <ul className="list-unstyled d-flex">
+          <li>
+            <a href="#"><span className="icon_heart_alt"></span></a>
+          </li>
+          <li>
+            <a href="#"><span className="icon_adjust-horiz"></span></a>
+          </li>
         </ul>
       </div>
       <div className="product__details__widget">
-        <ul>
-          <li>
+        <ul className="list-unstyled">
+          <li className="mb-2">
             <span>Availability:</span>
             <div className="stock__checkbox">
               <label htmlFor="stockin">
-                In Stock
-                <input type="checkbox" id="stockin" />
+                {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                <input
+                  type="checkbox"
+                  id="stockin"
+                  checked={product.stock > 0}
+                  readOnly
+                />
                 <span className="checkmark"></span>
               </label>
             </div>
           </li>
-          <li>
+          <li className="mb-2">
             <span>Available color:</span>
             <div className="color__checkbox">
-              <label htmlFor="red">
-                <input type="radio" name="color__radio" id="red" defaultChecked />
-                <span className="checkmark"></span>
-              </label>
-              <label htmlFor="black">
-                <input type="radio" name="color__radio" id="black" />
-                <span className="checkmark black-bg"></span>
-              </label>
-              <label htmlFor="grey">
-                <input type="radio" name="color__radio" id="grey" />
-                <span className="checkmark grey-bg"></span>
-              </label>
+              {colors.length > 0 ? (
+                colors.map(color => (
+                  <label key={color} className={selectedColor === color ? 'active' : ''}>
+                    <input
+                      type="radio"
+                      name="color"
+                      value={color}
+                      checked={selectedColor === color}
+                      onChange={() => handleColorChange(color)}
+                    />
+                    <span style={{ backgroundColor: color }} className="checkmark"></span>
+                  </label>
+                ))
+              ) : (
+                <p>No colors available</p>
+              )}
             </div>
           </li>
-          <li>
+          <li className="mb-2">
             <span>Available size:</span>
             <div className="size__btn">
-              <label htmlFor="xs-btn" className="active">
-                <input type="radio" id="xs-btn" />
-                xs
-              </label>
-              <label htmlFor="s-btn">
-                <input type="radio" id="s-btn" />
-                s
-              </label>
-              <label htmlFor="m-btn">
-                <input type="radio" id="m-btn" />
-                m
-              </label>
-              <label htmlFor="l-btn">
-                <input type="radio" id="l-btn" />
-                l
-              </label>
+              {sizes.length > 0 ? (
+                sizes.map(size => (
+                  <label key={size} className={selectedSize === size ? 'active' : ''}>
+                    <input
+                      type="radio"
+                      name="size"
+                      value={size}
+                      checked={selectedSize === size}
+                      onChange={() => handleSizeChange(size)}
+                    />
+                    {size}
+                  </label>
+                ))
+              ) : (
+                <p>No sizes available</p>
+              )}
             </div>
           </li>
-          <li>
+          <li className="mb-2">
             <span>Promotions:</span>
-            <p>Free shipping</p>
+            <p>{product.warranty}</p>
           </li>
         </ul>
       </div>

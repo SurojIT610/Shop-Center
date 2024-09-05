@@ -1,57 +1,146 @@
-/* src/components/ProductList/ProductList.css */
-.product__item {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    margin-bottom: 30px;
-  }
-  
-  .product__item__pic {
-    position: relative;
-    height: 300px;
-    background-size: cover;
-    background-position: center;
-  }
-  
-  .product__item__pic .label {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #f00;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 4px;
-  }
-  
-  .product__item__text {
-    padding: 20px;
-  }
-  
-  .product__price {
-    font-weight: bold;
-  }
-  
-  .product__price span {
-    text-decoration: line-through;
-    color: #888;
-  }
-  
-  .product__item.sale .product__price {
-    color: #f00;
-  }
-  
-  .product__item.stockout .product__item__pic .label {
-    background-color: #bbb;
-  }
-  
+/* Import FontAwesome for icons */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
- .shop__sidebar .card-heading a {
-    padding: 16px;
-    display: block;
-    font-size: 14px;
+.product__item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
 }
+
+.product__item__pic {
+  position: relative;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.product__item__pic .label {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: #f39c12;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.product__item__pic .label.new {
+  background: #27ae60;
+}
+
+.product__item__pic .label.sale {
+  background: #e74c3c;
+}
+
+.product__item__pic .label.out-of-stock {
+  background: #7f8c8d;
+}
+
+.product__item__hover {
+  position: absolute;
+  bottom: 0; /* Position hover effect at the bottom */
+  left: 0;
+  width: 100%;
+  height: 100%; /* Cover the entire product image */
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end; /* Align icons at the bottom */
+  justify-content: center; /* Center icons horizontally */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product__item:hover .product__item__hover {
+  opacity: 1;
+}
+
+.product__item__hover ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex; /* Align icons horizontally */
+  justify-content: center; /* Center icons horizontally */
+  width: 100%; /* Ensure the list spans the width of the hover area */
+  position: absolute; /* Position the icons at the bottom of the hover area */
+  bottom: 10px; /* Space from the bottom of the hover area */
+}
+
+.product__item__hover ul li {
+  margin: 0 10px; /* Space between icons */
+}
+
+.product__item__hover ul li a {
+  color: #fff;
+  font-size: 24px; /* Adjust font size for better visibility */
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease; /* Added transform for rotation */
+}
+
+.product__item__hover ul li a:hover {
+  color: #f39c12; /* Color change on hover */
+  transform: rotate(20deg); /* Rotate the icon */
+}
+
+.product__item__hover .icon_cart_alt::before {
+  content: '\f217'; /* FontAwesome code for cart icon */
+  font-family: 'Font Awesome 5 Free'; /* Ensure FontAwesome font is applied */
+  font-weight: 900; /* FontAwesome uses font-weight for icons */
+}
+
+.product__item__hover .icon_heart_alt::before {
+  content: '\f004'; /* FontAwesome code for heart icon */
+  font-family: 'Font Awesome 5 Free'; /* Ensure FontAwesome font is applied */
+  font-weight: 900; /* FontAwesome uses font-weight for icons */
+}
+
+.product__item__hover .icon_expand_alt::before {
+  content: '\f065'; /* FontAwesome code for expand icon */
+  font-family: 'Font Awesome 5 Free'; /* Ensure FontAwesome font is applied */
+  font-weight: 900; /* FontAwesome uses font-weight for icons */
+}
+
+.product__item__text {
+  padding: 20px;
+  text-align: center;
+}
+
+.product__item__text h6 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.product__price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.product__price span {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.product__item.sale .product__price {
+  color: #e74c3c; /* Update color to match sale label */
+}
+
+.product__item.stockout .product__item__pic .label {
+  background-color: #7f8c8d; /* Same as out-of-stock label */
+}
+
+/* Sidebar adjustments */
+.shop__sidebar .card-heading a {
+  padding: 16px;
+  display: block;
+  font-size: 14px;
+}
+
 .shop__sidebar .card {
   border: none;
   border-bottom: 1px solid #c1c1c1;
@@ -60,4 +149,43 @@
 
 .shop__sidebar .categories__accordion {
   margin-bottom: 38px;
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.page-item {
+  margin: 0 0.25rem;
+}
+
+.page-link {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: #007bff;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.page-link:hover {
+  color: #0056b3;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.page-item.active .page-link {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
 }

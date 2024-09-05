@@ -1,12 +1,12 @@
-import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import 'bootstrap/dist/js/bootstrap.bundle.min'; // Import Bootstrap JS with Popper
-
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import ProductImageGallery from './Components/ProductImageGallery';
 import ProductInfo from './Components/ProductInfo';
 import ProductTabs from './Components/ProductTabs';
 import RelatedProducts from './Components/RelatedProducts';
-import './Components/ProductDetail.scss';
+import sampleProduct from './Components/sampleData'; // Import the sample data
+import './ProductDetail.scss';
 
 const ProductDetails = () => {
   return (
@@ -14,10 +14,10 @@ const ProductDetails = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-6">
-            <ProductImageGallery />
+            <ProductImageGallery images={sampleProduct.imageUrl} />
           </div>
           <div className="col-lg-6">
-            <ProductInfo />
+            <ProductInfo product={sampleProduct} />
           </div>
           <div className="col-lg-12">
             <ProductTabs />
@@ -34,6 +34,6 @@ const ProductDetails = () => {
       </div>
     </section>
   );
-}
+};
 
-export default ProductDetails
+export default ProductDetails;

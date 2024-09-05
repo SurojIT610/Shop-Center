@@ -7,7 +7,7 @@ import payment3 from '../../assets/img/payment/payment-3.png';
 import payment4 from '../../assets/img/payment/payment-4.png';
 import payment5 from '../../assets/img/payment/payment-5.png';
 
-import '../../assets/sass/_footer.scss'
+import './_footer.scss'
 
 const Footer = () => {
     return (

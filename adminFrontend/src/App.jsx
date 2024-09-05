@@ -1,16 +1,18 @@
 import { useState } from 'react'
-import Navbar from './Components/HeaderFooter/Navbar'
+import Navbar from './Components/HeaderFooter/Navbar.jsx'
 import Footer from './Components/HeaderFooter/Footer'
 import HomePage from './Pages/HomePage/HomePage'
 import ShopPage from './Pages/Shoppage/ShopPage'
 import ProductDetails from './Pages/ProductDetail/ProductDetails'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import $ from 'jquery'; // Import jQuery if not included in Bootstrap bundle
+
+
 
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -19,7 +21,7 @@ function App() {
 
             <HomePage/>
             {/* <ShopPage/> */}
-<ProductDetails/>
+{/* <ProductDetails/> */}
             <Footer />
         </div>
     </>

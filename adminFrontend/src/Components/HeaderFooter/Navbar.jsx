@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/img/logo.png'; // Adjust the path as necessary
-import '../../assets/css/Navbar.scss'; // Ensure this includes your styles
-import { initializeSearchModal } from '../../assets/js/Navbar.js'; // Import the script
+import './Navbar.scss'; // Ensure this includes your styles
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Navbar = () => {
     useEffect(() => {
-        initializeSearchModal(); // Initialize the search modal functionality
+        // Your modal initialization code
     }, []);
 
     return (
@@ -21,56 +20,64 @@ const Navbar = () => {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item"><Link to="/" className="nav-link">Home</Link></li>
-                            <li className="nav-item"><Link to="/about" className="nav-link">About</Link></li>
-                            <li className="nav-item"><Link to="/blog" className="nav-link">Blog</Link></li>
+                        <ul className="navbar-nav">
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="contactDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Contact
+                                <a className="nav-link dropdown-toggle" href="#" id="electronicsDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    Electronics
                                 </a>
-                                <div className="dropdown-menu" aria-labelledby="contactDropdown">
-                                    <Link to="/contact/l1" className="dropdown-item">l1</Link>
-                                    <Link to="/contact/l2" className="dropdown-item">l2</Link>
-                                    <Link to="/contact/l3" className="dropdown-item">l3</Link>
-                                </div>
-                            </li>
-                            {/* Additional Dropdowns */}
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="dropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Drop1
-                                </a>
-                                <div className="dropdown-menu" aria-labelledby="dropdown1">
-                                    <Link to="/drop1/item1" className="dropdown-item">Item 1</Link>
-                                    <Link to="/drop1/item2" className="dropdown-item">Item 2</Link>
-                                    <Link to="/drop1/item3" className="dropdown-item">Item 3</Link>
+                                <div className="dropdown-menu" aria-labelledby="electronicsDropdown">
+                                    <Link to="/electronics/list1" className="dropdown-item">List 1</Link>
+                                    <Link to="/electronics/list2" className="dropdown-item">List 2</Link>
+                                    <Link to="/electronics/list3" className="dropdown-item">List 3</Link>
+                                    <Link to="/electronics/list4" className="dropdown-item">List 4</Link>
+                                    <Link to="/electronics/list5" className="dropdown-item">List 5</Link>
                                 </div>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="dropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Drop2
+                                <a className="nav-link dropdown-toggle" href="#" id="fashionDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    Fashion
                                 </a>
-                                <div className="dropdown-menu" aria-labelledby="dropdown2">
-                                    <Link to="/drop2/item1" className="dropdown-item">Item 1</Link>
-                                    <Link to="/drop2/item2" className="dropdown-item">Item 2</Link>
-                                    <Link to="/drop2/item3" className="dropdown-item">Item 3</Link>
+                                <div className="dropdown-menu" aria-labelledby="fashionDropdown">
+                                    <a className="dropdown-item dropdown-toggle" href="#" id="menDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        Men
+                                    </a>
+                                    <div className="dropdown-menu" aria-labelledby="menDropdown">
+                                        <Link to="/fashion/men/jeans" className="dropdown-item">Jeans</Link>
+                                        <Link to="/fashion/men/trousers" className="dropdown-item">Trousers</Link>
+                                        <Link to="/fashion/men/shirts" className="dropdown-item">Shirts</Link>
+                                    </div>
+                                    <a className="dropdown-item dropdown-toggle" href="#" id="womenDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        Women
+                                    </a>
+                                    <div className="dropdown-menu" aria-labelledby="womenDropdown">
+                                        <Link to="/fashion/women/dresses" className="dropdown-item">Dresses</Link>
+                                        <Link to="/fashion/women/tops" className="dropdown-item">Tops</Link>
+                                        <Link to="/fashion/women/skirts" className="dropdown-item">Skirts</Link>
+                                    </div>
+                                    <a className="dropdown-item dropdown-toggle" href="#" id="kidsDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        Kids
+                                    </a>
+                                    <div className="dropdown-menu" aria-labelledby="kidsDropdown">
+                                        <Link to="/fashion/kids/shirts" className="dropdown-item">Shirts</Link>
+                                        <Link to="/fashion/kids/pants" className="dropdown-item">Pants</Link>
+                                        <Link to="/fashion/kids/jackets" className="dropdown-item">Jackets</Link>
+                                    </div>
                                 </div>
                             </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="dropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Drop3
-                                </a>
-                                <div className="dropdown-menu" aria-labelledby="dropdown3">
-                                    <Link to="/drop3/item1" className="dropdown-item">Item 1</Link>
-                                    <Link to="/drop3/item2" className="dropdown-item">Item 2</Link>
-                                    <Link to="/drop3/item3" className="dropdown-item">Item 3</Link>
-                                </div>
-                            </li>
-                            {/* Search Icon */}
                             <li className="nav-item">
-                                <a id="searchIcon" className="nav-link">
-                                    <i className="fa fa-search"></i>
+                                <a className="nav-link" href="#">
+                                    <i className="fa fa-search" id="searchIcon"></i>
                                 </a>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    My Account
+                                </a>
+                                <div className="dropdown-menu" aria-labelledby="accountDropdown">
+                                    <Link to="/account" className="dropdown-item">My Account</Link>
+                                    <Link to="/login" className="dropdown-item">Log In</Link>
+                                    <Link to="/signup" className="dropdown-item">Sign Up</Link>
+                                </div>
                             </li>
                         </ul>
                     </div>

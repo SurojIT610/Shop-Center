@@ -1,26 +1,180 @@
 /* Sidebar.css */
 .shop__sidebar {
-    margin-bottom: 30px;
-  }
-  
-  .sidebar__categories .accordion {
-    margin-bottom: 20px;
-  }
-  
-  .sidebar__filter {
-    margin-bottom: 20px;
-  }
-  
-  .sidebar__sizes, .sidebar__color {
-    margin-bottom: 20px;
-  }
-  
-  .size__list label, .color__list label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .size__list input[type="checkbox"], .color__list input[type="checkbox"] {
-    margin-right: 10px;
-  }
-  
+  margin-bottom: 30px;
+  background: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar__categories .accordion,
+.sidebar__filter,
+.sidebar__sizes,
+.sidebar__color {
+  margin-bottom: 20px;
+}
+
+.size__list label,
+.color__list label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.size__list input[type="checkbox"],
+.color__list input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.size__list label,
+.color__list label {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  line-height: 24px;
+}
+
+.size__list input[type='checkbox'],
+.color__list input[type='checkbox'] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #ddd;
+}
+
+.size__list .checkmark {
+  height: 18px;
+  width: 18px;
+  border-radius: 4px;
+}
+
+.color__list .checkmark {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+
+.size__list input:checked ~ .checkmark,
+.color__list input:checked ~ .checkmark {
+  background-color: #333;
+}
+
+.size__list.color__list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.size__list.color__list label {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.sidebar__categories .card {
+  margin-bottom: 15px;
+  border: none;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-heading a {
+  display: block;
+  padding: 15px;
+  background: #fff;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  text-decoration: none;
+}
+
+.card-heading a:hover {
+  background: #f8f8f8;
+}
+
+.card-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card-body li {
+  padding: 10px;
+}
+
+.card-body label {
+  cursor: pointer;
+}
+
+.filter-range-wrap {
+  margin-top: 20px;
+}
+
+.filter-range-wrap input[type='range'] {
+  -webkit-appearance: none;
+  background: #ddd;
+  border-radius: 5px;
+  height: 8px;
+}
+
+.filter-range-wrap input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #333;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.price-input {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.price-input p {
+  font-size: 16px;
+  color: #333;
+}
+
+.price-input input {
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 4px;
+  width: 80px;
+  text-align: center;
+}
+
+.section-title {
+  margin-bottom: 20px;
+}
+
+.section-title h4 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  position: relative;
+}
+
+.section-title h4::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 50px;
+  height: 2px;
+  background: #333;
+}
