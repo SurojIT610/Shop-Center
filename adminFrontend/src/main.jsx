@@ -1,16 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client'; // Import createRoot from react-dom/client
-import { BrowserRouter as Router } from 'react-router-dom'; // Import BrowserRouter
+import ReactDOM from 'react-dom/client'; // Updated import for React 18+
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import 'bootstrap/dist/js/bootstrap.bundle.min'; // Import Bootstrap JS with Popper
-import '@fortawesome/fontawesome-free/css/all.min.css';
+// import './index.css'; // Assuming you use this CSS file
 
-const rootElement = document.getElementById('root');
-const root = ReactDOM.createRoot(rootElement); // Create a root
+// Create a root element to render your app
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <Router> {/* Wrap your app with Router */}
-    <App />
-  </Router>
+  <React.StrictMode>
+    <Router>
+      <App />
+    </Router>
+  </React.StrictMode>
 );

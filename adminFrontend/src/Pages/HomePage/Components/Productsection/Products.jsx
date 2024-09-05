@@ -23,6 +23,7 @@ const Products = () => {
                 <li data-filter=".kid">Kid’s</li>
                 <li data-filter=".accessories">Accessories</li>
                 <li data-filter=".cosmetic">Cosmetics</li>
+                <li data-filter=".electronics">Electronics</li>
               </ul>
             </div>
           </div>

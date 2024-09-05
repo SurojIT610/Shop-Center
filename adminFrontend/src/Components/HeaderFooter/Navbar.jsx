@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/img/logo.png'; // Adjust the path as necessary
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is included
+import 'bootstrap/dist/js/bootstrap.bundle.min'; // Ensure Bootstrap JavaScript is included
 
 const Navbar = () => {
   return (
@@ -23,15 +25,33 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link" to="/team">Team</Link>
+              <Link className="nav-link" to="/shop">Shop</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/product-details">Product Detail</Link>
             </li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Projects
+                Products
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><Link className="dropdown-item" to="#">Action</Link></li>
+                <li><Link className="dropdown-item" to="#">Electronics</Link></li>
+                <li className="dropdown-submenu">
+                  <a className="dropdown-item dropdown-toggle" href="#">Submenu</a>
+                  <ul className="dropdown-menu">
+                    <li><Link className="dropdown-item" to="#">Submenu Item 1</Link></li>
+                    <li><Link className="dropdown-item" to="#">Submenu Item 2</Link></li>
+                    <li className="dropdown-submenu">
+                      <a className="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                      <ul className="dropdown-menu">
+                        <li><Link className="dropdown-item" to="#">Subsubmenu Item 1</Link></li>
+                        <li><Link className="dropdown-item" to="#">Subsubmenu Item 2</Link></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
                 <li><Link className="dropdown-item" to="#">Another action</Link></li>
                 <li><hr className="dropdown-divider" /></li>
                 <li><Link className="dropdown-item" to="#">Something else here</Link></li>
@@ -68,6 +88,26 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
+
+      {/* Custom CSS for nested dropdowns */}
+      <style>
+        {`
+          .dropdown-submenu {
+            position: relative;
+          }
+          .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -6px;
+            display: none;
+            position: absolute;
+            z-index: 1000; /* Ensure dropdown is on top */
+          }
+          .dropdown-submenu:hover .dropdown-menu {
+            display: block;
+          }
+        `}
+      </style>
     </nav>
   );
 };

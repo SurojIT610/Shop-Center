@@ -6,6 +6,8 @@ import payment2 from '../../assets/img/payment/payment-2.png';
 import payment3 from '../../assets/img/payment/payment-3.png';
 import payment4 from '../../assets/img/payment/payment-4.png';
 import payment5 from '../../assets/img/payment/payment-5.png';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 import './_footer.scss'
 
@@ -72,7 +74,7 @@ const Footer = () => {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="footer__copyright__text">
-                            <p>Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i className="fa fa-heart" aria-hidden="true"></i> by <Link to="https://colorlib.com" target="_blank" rel="noopener noreferrer">Colorlib</Link></p>
+                            <p>Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i className="fa fa-heart" aria-hidden="true"></i> by Surojit Majumdar</p>
                         </div>
                     </div>
                 </div>

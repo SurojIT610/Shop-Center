@@ -1,8 +1,18 @@
 /* Navbar.scss */
 .navbar {
-    position: fixed; /* or 'sticky' depending on your design */
-    top: 0;
-    width: 100%;
-    z-index: 1000; /* Ensure it's above other content */
-  }
-  
+  position: fixed; /* or 'sticky' depending on your design */
+  top: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.navbar-nav .dropdown-menu {
+  position: absolute;
+  top: 100%; /* Place the dropdown below the toggle */
+  left: 0; /* Align with the left edge of the toggle */
+  transform: translateY(0); /* Ensure it starts below the toggle */
+  margin-top: 0.125rem; /* Add a small margin if needed to prevent overlap */
+  z-index: 1050; /* Ensure it's above other content, including sibling dropdowns */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
