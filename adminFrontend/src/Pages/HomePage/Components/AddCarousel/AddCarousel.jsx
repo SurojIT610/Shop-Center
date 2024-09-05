@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../../../assets/css/AddCarousel.scss';
+import './AddCarousel.scss';
 import bannerImage from '../../../../assets/img/banner/banner-1.jpg'; // Adjust the path as needed
 
 const AddCarousel = () => {

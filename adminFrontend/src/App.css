@@ -1,0 +1,9 @@
+/* App.scss or global styles */
+.content {
+    padding-top: 60px; /* Adjust to match Navbar height */
+  }
+  
+  .footer {
+    margin-top: 30px; /* Ensure space above footer if necessary */
+  }
+  

@@ -1,7 +1,7 @@
 // src/components/Trendy.jsx
 
 import React from 'react';
-import '../../../../assets/css/Trendy.scss'; // Import the CSS file
+import './Trendy.scss'; // Import the CSS file
 
 // Import images
 import ht1 from '../../../../assets/img/trend/ht-1.jpg';

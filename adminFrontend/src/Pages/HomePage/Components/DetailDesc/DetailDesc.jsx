@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../../assets/css/DetailDesc.scss'; // Import the CSS for styling (create this file if needed)
+import './DetailDesc.scss'; // Import the CSS for styling (create this file if needed)
 // Import font-awesome CSS if not already imported globally
 import '@fortawesome/fontawesome-free/css/all.min.css';
 

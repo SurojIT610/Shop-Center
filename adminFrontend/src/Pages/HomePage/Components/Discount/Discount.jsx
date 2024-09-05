@@ -1,7 +1,7 @@
 // src/components/Discount.jsx
 
 import React, { useEffect, useState } from 'react';
-import '../../../../assets/css/Discount.scss'; // Import the CSS file
+import './Discount.scss'; // Import the CSS file
 
 // Import image
 import discountImg from '../../../../assets/img/discount.jpg';
