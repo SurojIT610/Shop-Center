@@ -11,19 +11,15 @@ const ShopPage = () => {
     colors: []
   });
 
-  const handleFilterChange = (newFilters) => {
-    setFilters(newFilters);
-  };
-
   return (
-    <section className="shop spad">
+    <div className="shop-page">
       <div className="container">
         <div className="row">
-          <Sidebar onFilterChange={handleFilterChange} />
+          <Sidebar onFilterChange={setFilters} />
           <ProductList filters={filters} />
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
