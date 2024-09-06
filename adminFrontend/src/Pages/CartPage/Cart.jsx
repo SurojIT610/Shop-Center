@@ -3,7 +3,7 @@ import './Cart.scss'; // Add your custom CSS here or use inline styles if prefer
 
 const Cart = () => {
   return (
-    <section className="h-100 h-custom" style={{ backgroundColor: '#eee' }}>
+    <section className="h-100 h-custom" style={{ backgroundColor: '#000', color: '#fff' }}>
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col">
@@ -103,7 +103,7 @@ const Cart = () => {
                     <div className="card bg-primary text-white rounded-3">
                       <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center mb-4">
-                          <h5 className="mb-0">Card details</h5>
+                          <h5 className="mb-0">Shipping details</h5>
                           <img
                             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
                             className="img-fluid rounded-3"
@@ -112,41 +112,35 @@ const Cart = () => {
                           />
                         </div>
 
-                        <p className="small mb-2">Card type</p>
-                        <a href="#!" className="text-white">
-                          <i className="fab fa-cc-mastercard fa-2x me-2"></i>
-                        </a>
-                        <a href="#!" className="text-white">
-                          <i className="fab fa-cc-visa fa-2x me-2"></i>
-                        </a>
-                        <a href="#!" className="text-white">
-                          <i className="fab fa-cc-amex fa-2x me-2"></i>
-                        </a>
-                        <a href="#!" className="text-white">
-                          <i className="fab fa-cc-paypal fa-2x"></i>
-                        </a>
-
                         <form className="mt-4">
                           <div className="form-outline form-white mb-4">
                             <input
                               type="text"
                               id="typeName"
                               className="form-control form-control-lg"
-                              placeholder="Cardholder's Name"
+                              placeholder="Full Name"
                             />
-                            <label className="form-label" htmlFor="typeName">Cardholder's Name</label>
+                            <label className="form-label" htmlFor="typeName">Full Name</label>
                           </div>
 
                           <div className="form-outline form-white mb-4">
                             <input
                               type="text"
-                              id="typeText"
+                              id="typeAddress"
                               className="form-control form-control-lg"
-                              placeholder="1234 5678 9012 3457"
-                              minLength="19"
-                              maxLength="19"
+                              placeholder="Address"
                             />
-                            <label className="form-label" htmlFor="typeText">Card Number</label>
+                            <label className="form-label" htmlFor="typeAddress">Address</label>
+                          </div>
+
+                          <div className="form-outline form-white mb-4">
+                            <input
+                              type="text"
+                              id="typeCity"
+                              className="form-control form-control-lg"
+                              placeholder="City"
+                            />
+                            <label className="form-label" htmlFor="typeCity">City</label>
                           </div>
 
                           <div className="row mb-4">
@@ -154,28 +148,22 @@ const Cart = () => {
                               <div className="form-outline form-white">
                                 <input
                                   type="text"
-                                  id="typeExp"
+                                  id="typeZip"
                                   className="form-control form-control-lg"
-                                  placeholder="MM/YYYY"
-                                  size="7"
-                                  minLength="7"
-                                  maxLength="7"
+                                  placeholder="ZIP Code"
                                 />
-                                <label className="form-label" htmlFor="typeExp">Expiration</label>
+                                <label className="form-label" htmlFor="typeZip">ZIP Code</label>
                               </div>
                             </div>
                             <div className="col-md-6">
                               <div className="form-outline form-white">
                                 <input
-                                  type="password"
-                                  id="typeCvv"
+                                  type="text"
+                                  id="typePhone"
                                   className="form-control form-control-lg"
-                                  placeholder="&#9679;&#9679;&#9679;"
-                                  size="1"
-                                  minLength="3"
-                                  maxLength="3"
+                                  placeholder="Phone Number"
                                 />
-                                <label className="form-label" htmlFor="typeCvv">CVV</label>
+                                <label className="form-label" htmlFor="typePhone">Phone Number</label>
                               </div>
                             </div>
                           </div>

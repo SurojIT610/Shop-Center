@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ProductList.scss';
 
-const ProductList = ({ filters }) => {
+const ProductList = ({ filters, onAddToCart }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,10 +73,9 @@ const ProductList = ({ filters }) => {
     }));
   };
 
-  const handleAddToCart = (productId) => {
-    const quantity = quantities[productId] || 1;
-    console.log(`Added product ${productId} to cart with quantity ${quantity}`);
-    // Here you would typically dispatch an action to add the product to the cart
+  const handleAddToCart = (product) => {
+    const quantity = quantities[product.id] || 1;
+    onAddToCart({ ...product, quantity });
   };
 
   return (
@@ -93,7 +92,7 @@ const ProductList = ({ filters }) => {
                   {product.label && <div className={`label ${product.label.toLowerCase()}`}>{product.label}</div>}
                   <div className="product__item__hover">
                     <ul>
-                      <li><a href="#"><span className="icon_cart_alt"></span></a></li>
+                      <li><a href="#" onClick={(e) => { e.stopPropagation(); handleAddToCart(product); }}><span className="icon_cart_alt"></span></a></li>
                       <li><a href="#"><span className="icon_heart_alt"></span></a></li>
                       <li><a href="#"><span className="icon_expand_alt"></span></a></li>
                     </ul>
