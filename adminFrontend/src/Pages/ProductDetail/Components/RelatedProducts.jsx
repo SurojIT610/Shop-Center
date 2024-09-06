@@ -1,28 +1,23 @@
-// src/components/RelatedProducts.js
+// src/components/RelatedProducts.jsx
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import 'bootstrap/dist/js/bootstrap.bundle.min'; // Import Bootstrap JS with Popper
-import './RelatedProducts.scss'; // Import SCSS for styling
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import './RelatedProducts.scss';
 
-// Import images
-import relatedProduct1 from '../../../assets/img/product/related/rp-1.jpg';
-import relatedProduct2 from '../../../assets/img/product/related/rp-2.jpg';
-// Import more images as needed
-
-const RelatedProducts = () => {
+const RelatedProducts = ({ products }) => {
   return (
     <div className="related-products">
-      <div className="related__product__item">
-        <img src={relatedProduct1} alt="Related Product 1" className="img-fluid" />
-        <h5>Product Name 1</h5>
-        <div className="product__price">$50.00</div>
-      </div>
-      <div className="related__product__item">
-        <img src={relatedProduct2} alt="Related Product 2" className="img-fluid" />
-        <h5>Product Name 2</h5>
-        <div className="product__price">$60.00</div>
-      </div>
-      {/* Add more related product items here */}
+      {products.length > 0 ? (
+        products.map(product => (
+          <div key={product.id} className="related__product__item">
+            <img src={product.thumbnail} alt={product.title} className="img-fluid" />
+            <h5>{product.title}</h5>
+            <div className="product__price">${product.price}</div>
+          </div>
+        ))
+      ) : (
+        <p>No related products found.</p>
+      )}
     </div>
   );
 };

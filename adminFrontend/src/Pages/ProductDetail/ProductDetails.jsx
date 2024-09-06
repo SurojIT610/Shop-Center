@@ -1,26 +1,51 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-import ProductImageGallery from './Components/ProductImageGallery';
-import ProductInfo from './Components/ProductInfo';
-import ProductTabs from './Components/ProductTabs';
-import RelatedProducts from './Components/RelatedProducts';
-import sampleProduct from './Components/sampleData'; // Import the sample data
+// src/pages/ProductDetail/ProductDetails.jsx
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import ProductImageGallery from './components/ProductImageGallery';
+import ProductInfo from './components/ProductInfo';
+import ProductTabs from './components/ProductTabs';
+import RelatedProducts from './components/RelatedProducts';
 import './ProductDetail.scss';
 
 const ProductDetails = () => {
+  const { productId } = useParams();
+  const [product, setProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const productResponse = await axios.get(`https://dummyjson.com/products/${productId}`);
+        setProduct(productResponse.data);
+
+        const relatedResponse = await axios.get(`https://dummyjson.com/products?category=${productResponse.data.category}`);
+        const filteredProducts = relatedResponse.data.products.filter(p => p.id !== productId);
+        setRelatedProducts(filteredProducts);
+      } catch (error) {
+        console.error("Error fetching product details", error);
+      }
+    };
+
+    fetchProduct();
+  }, [productId]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <section className="product-details spad">
       <div className="container">
         <div className="row">
           <div className="col-lg-6">
-            <ProductImageGallery images={sampleProduct.imageUrl} />
+            <ProductImageGallery images={product.images} />
           </div>
           <div className="col-lg-6">
-            <ProductInfo product={sampleProduct} />
+            <ProductInfo product={product} />
           </div>
           <div className="col-lg-12">
-            <ProductTabs />
+            <ProductTabs product={product} />
           </div>
         </div>
         <div className="row">
@@ -29,7 +54,7 @@ const ProductDetails = () => {
               <h5>RELATED PRODUCTS</h5>
             </div>
           </div>
-          <RelatedProducts />
+          <RelatedProducts products={relatedProducts} />
         </div>
       </div>
     </section>

@@ -1,3 +1,4 @@
+// src/components/ProductInfo.jsx
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -7,10 +8,6 @@ const ProductInfo = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
-
-  // Fallback values to avoid errors if product is not defined or missing properties
-  const colors = product?.colors || [];
-  const sizes = product?.sizes || [];
 
   const handleQuantityChange = (amount) => {
     setQuantity(prevQuantity => Math.max(prevQuantity + amount, 1));
@@ -25,20 +22,20 @@ const ProductInfo = ({ product }) => {
   };
 
   if (!product) {
-    return <div>Loading...</div>; // Handle loading or empty state
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="product__details__text">
-      <h3>{product.name} <span>Brand: {product.brand}</span></h3>
+      <h3>{product.title}</h3>
       <div className="rating mb-3">
         {Array.from({ length: 5 }, (_, index) => (
           <i key={index} className={`fa fa-star ${index < Math.round(product.rating) ? "checked" : ""}`}></i>
         ))}
-        <span> ({product.rating} reviews)</span>
+        <span> ({product.reviews.length} reviews)</span>
       </div>
       <div className="product__details__price mb-3">
-        ${product.price} <span>${(product.price * 1.1).toFixed(2)}</span>
+        ${product.price} <span>${(product.price * (1 - product.discountPercentage / 100)).toFixed(2)}</span>
       </div>
       <p>{product.description}</p>
       <div className="product__details__button mb-4 d-flex align-items-center justify-content-between">
@@ -83,11 +80,11 @@ const ProductInfo = ({ product }) => {
             <span>Availability:</span>
             <div className="stock__checkbox">
               <label htmlFor="stockin">
-                {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                {product.availabilityStatus}
                 <input
                   type="checkbox"
                   id="stockin"
-                  checked={product.stock > 0}
+                  checked={product.availabilityStatus === 'In Stock'}
                   readOnly
                 />
                 <span className="checkmark"></span>
@@ -95,50 +92,24 @@ const ProductInfo = ({ product }) => {
             </div>
           </li>
           <li className="mb-2">
-            <span>Available color:</span>
-            <div className="color__checkbox">
-              {colors.length > 0 ? (
-                colors.map(color => (
-                  <label key={color} className={selectedColor === color ? 'active' : ''}>
-                    <input
-                      type="radio"
-                      name="color"
-                      value={color}
-                      checked={selectedColor === color}
-                      onChange={() => handleColorChange(color)}
-                    />
-                    <span style={{ backgroundColor: color }} className="checkmark"></span>
-                  </label>
-                ))
-              ) : (
-                <p>No colors available</p>
-              )}
-            </div>
+            <span>Weight:</span>
+            <p>{product.weight} kg</p>
           </li>
           <li className="mb-2">
-            <span>Available size:</span>
-            <div className="size__btn">
-              {sizes.length > 0 ? (
-                sizes.map(size => (
-                  <label key={size} className={selectedSize === size ? 'active' : ''}>
-                    <input
-                      type="radio"
-                      name="size"
-                      value={size}
-                      checked={selectedSize === size}
-                      onChange={() => handleSizeChange(size)}
-                    />
-                    {size}
-                  </label>
-                ))
-              ) : (
-                <p>No sizes available</p>
-              )}
-            </div>
+            <span>Dimensions:</span>
+            <p>{product.dimensions.width} x {product.dimensions.height} x {product.dimensions.depth} cm</p>
           </li>
           <li className="mb-2">
-            <span>Promotions:</span>
-            <p>{product.warranty}</p>
+            <span>Warranty:</span>
+            <p>{product.warrantyInformation}</p>
+          </li>
+          <li className="mb-2">
+            <span>Shipping:</span>
+            <p>{product.shippingInformation}</p>
+          </li>
+          <li className="mb-2">
+            <span>Return Policy:</span>
+            <p>{product.returnPolicy}</p>
           </li>
         </ul>
       </div>

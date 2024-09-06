@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import './ProductList.scss'; // Ensure this file is styled appropriately
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './ProductList.scss';
 
 const ProductList = ({ filters }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [quantities, setQuantities] = useState({});
   const productsPerPage = 3;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch products from API
     const fetchProducts = async () => {
       try {
         const response = await axios.get('https://dummyjson.com/products');
@@ -24,29 +26,24 @@ const ProductList = ({ filters }) => {
   }, []);
 
   useEffect(() => {
-    // Filter products based on the current filters
     let updatedProducts = [...products];
 
-    // Apply category filter
     if (filters.categories.length > 0) {
       updatedProducts = updatedProducts.filter(product =>
         filters.categories.includes(product.category)
       );
     }
 
-    // Apply price range filter
     updatedProducts = updatedProducts.filter(product =>
       product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1]
     );
 
-    // Apply size filter
     if (filters.sizes.length > 0) {
       updatedProducts = updatedProducts.filter(product =>
         filters.sizes.some(size => product.sizes && product.sizes.includes(size))
       );
     }
 
-    // Apply color filter
     if (filters.colors.length > 0) {
       updatedProducts = updatedProducts.filter(product =>
         filters.colors.includes(product.color)
@@ -54,10 +51,9 @@ const ProductList = ({ filters }) => {
     }
 
     setFilteredProducts(updatedProducts);
-    setCurrentPage(1); // Reset page when filters change
+    setCurrentPage(1);
   }, [filters, products]);
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
   const startIndex = (currentPage - 1) * productsPerPage;
   const currentProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
@@ -66,13 +62,30 @@ const ProductList = ({ filters }) => {
     setCurrentPage(pageNumber);
   };
 
+  const handleProductClick = (productId) => {
+    navigate(`/product-details/${productId}`);
+  };
+
+  const handleQuantityChange = (productId, amount) => {
+    setQuantities(prevQuantities => ({
+      ...prevQuantities,
+      [productId]: Math.max((prevQuantities[productId] || 1) + amount, 1)
+    }));
+  };
+
+  const handleAddToCart = (productId) => {
+    const quantity = quantities[productId] || 1;
+    console.log(`Added product ${productId} to cart with quantity ${quantity}`);
+    // Here you would typically dispatch an action to add the product to the cart
+  };
+
   return (
     <div className="col-lg-9 col-md-9">
       <div className="row">
         {currentProducts.length > 0 ? (
           currentProducts.map(product => (
             <div className="col-lg-4 col-md-6" key={product.id}>
-              <div className="product__item">
+              <div className="product__item" onClick={() => handleProductClick(product.id)}>
                 <div
                   className="product__item__pic set-bg"
                   style={{ backgroundImage: `url(${product.images[0] || 'https://via.placeholder.com/300'})` }}

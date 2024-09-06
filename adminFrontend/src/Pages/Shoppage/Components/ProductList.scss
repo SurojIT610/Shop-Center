@@ -276,3 +276,35 @@
 .page-link {
   color: #007bff;
 }
+// src/components/ProductList.scss
+
+.product__item__text {
+  // Existing styles...
+
+  .product__quantity {
+    display: flex;
+    align-items: center;
+
+    .qtybtn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      background-color: #f9f9f9;
+    }
+
+    .form-control {
+      width: 60px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+  }
+
+  .btn-dark {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border: none;
+  }
+}
