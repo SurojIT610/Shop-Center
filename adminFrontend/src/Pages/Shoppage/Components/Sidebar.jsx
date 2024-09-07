@@ -3,16 +3,23 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import Select from 'react-select';
 import './Sidebar.scss';
 
 const Sidebar = ({ onFilterChange }) => {
   const [categories, setCategories] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedTags, setSelectedTags] = useState({}); // Changed to store tags per category
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
-  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 1000000]);
+  const [lowPrice, setLowPrice] = useState(0);
+  const [highPrice, setHighPrice] = useState(1000000);
+  const [expandedCategory, setExpandedCategory] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -20,13 +27,42 @@ const Sidebar = ({ onFilterChange }) => {
         const response = await axios.get('https://dummyjson.com/products');
         const products = response.data.products;
 
-        // Extract unique attributes from products
-        const uniqueCategories = Array.from(new Set(products.map(product => product.category).filter(Boolean)));
-        const uniqueSizes = Array.from(new Set(products.flatMap(product => product.sizes || [])));
+        const categoryTagsMap = {};
+        const brandSet = new Set();
+        const sizeSet = new Set();
+
+        products.forEach(product => {
+          const { category, tags, brand, dimensions } = product;
+          if (category && tags) {
+            if (!categoryTagsMap[category]) {
+              categoryTagsMap[category] = new Set();
+            }
+            tags.forEach(tag => categoryTagsMap[category].add(tag));
+          }
+          if (brand) {
+            brandSet.add(brand);
+          }
+          if (dimensions) {
+            if (dimensions.size) {
+              sizeSet.add(dimensions.size);
+            }
+            if (dimensions.waistSize) {
+              sizeSet.add(dimensions.waistSize);
+            }
+          }
+        });
+
+        const categoriesWithTags = Object.keys(categoryTagsMap).map(category => ({
+          category,
+          tags: Array.from(categoryTagsMap[category])
+        }));
+
+        const uniqueBrands = Array.from(brandSet).map(brand => ({ label: brand, value: brand }));
+        const uniqueSizes = Array.from(sizeSet);
         const uniqueColors = Array.from(new Set(products.map(product => product.color).filter(Boolean)));
 
-        // Update state with extracted unique values
-        setCategories(uniqueCategories);
+        setCategories(categoriesWithTags);
+        setBrands(uniqueBrands);
         setSizes(uniqueSizes);
         setColors(uniqueColors);
       } catch (error) {
@@ -43,6 +79,13 @@ const Sidebar = ({ onFilterChange }) => {
     );
   };
 
+  const handleTagChange = (category, tag) => {
+    setSelectedTags(prev => ({
+      ...prev,
+      [category]: prev[category] ? (prev[category].includes(tag) ? prev[category].filter(t => t !== tag) : [...prev[category], tag]) : [tag]
+    }));
+  };
+
   const handleSizeChange = (size) => {
     setSelectedSizes(prev =>
       prev.includes(size) ? prev.filter(s => s !== size) : [...prev, size]
@@ -55,17 +98,42 @@ const Sidebar = ({ onFilterChange }) => {
     );
   };
 
-  const handlePriceChange = (range) => {
-    setPriceRange(range);
+  const handleBrandChange = (selectedOptions) => {
+    const selectedBrandsValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
+    setSelectedBrands(selectedBrandsValues);
+  };
+
+  const handlePriceChange = ([min, max]) => {
+    setLowPrice(min);
+    setHighPrice(max);
+    setPriceRange([min, max]);
   };
 
   const handleFilter = () => {
-    onFilterChange({
+    console.log("Applying Filters:");
+    console.log({
       categories: selectedCategories,
+      tags: selectedTags,
       priceRange,
       sizes: selectedSizes,
-      colors: selectedColors
+      colors: selectedColors,
+      brands: selectedBrands
     });
+
+    onFilterChange({
+      categories: selectedCategories,
+      tags: selectedTags,
+      priceRange,
+      sizes: selectedSizes,
+      colors: selectedColors,
+      brands: selectedBrands
+    });
+  };
+
+  const toggleCategory = (category) => {
+    setExpandedCategory(prevCategory =>
+      prevCategory === category ? null : category
+    );
   };
 
   return (
@@ -76,50 +144,44 @@ const Sidebar = ({ onFilterChange }) => {
             <h4>Categories</h4>
           </div>
           <div className="accordion" id="accordionCategories">
-            <div className="card">
-              <div className="card-header" id="headingCategories">
-                <h5 className="mb-0">
-                  <button
-                    className="btn btn-link"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseCategories"
-                    aria-expanded="true"
-                    aria-controls="collapseCategories"
-                  >
-                    Categories
-                  </button>
-                </h5>
-              </div>
-
-              <div
-                id="collapseCategories"
-                className="collapse show"
-                aria-labelledby="headingCategories"
-                data-parent="#accordionCategories"
-              >
-                <div className="card-body">
-                  <ul>
-                    {categories.length > 0 ? (
-                      categories.map((category, index) => (
+            {categories.map(({ category, tags }) => (
+              <div className="card" key={category}>
+                <div className="card-header">
+                  <h5 className="mb-0">
+                    <button
+                      className="btn btn-link"
+                      type="button"
+                      onClick={() => toggleCategory(category)}
+                      aria-expanded={expandedCategory === category}
+                    >
+                      {category}
+                    </button>
+                  </h5>
+                </div>
+                <div
+                  className={`collapse ${expandedCategory === category ? 'show' : ''}`}
+                  aria-labelledby="headingCategories"
+                  data-parent="#accordionCategories"
+                >
+                  <div className="card-body">
+                    <ul>
+                      {tags.map((tag, index) => (
                         <li key={index}>
                           <label>
                             <input
                               type="checkbox"
-                              checked={selectedCategories.includes(category)}
-                              onChange={() => handleCategoryChange(category)}
+                              checked={selectedTags[category] ? selectedTags[category].includes(tag) : false}
+                              onChange={() => handleTagChange(category, tag)}
                             />
-                            {category}
+                            {tag}
                           </label>
                         </li>
-                      ))
-                    ) : (
-                      <li>No categories available</li>
-                    )}
-                  </ul>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
         <div className="sidebar__filter">
@@ -130,13 +192,46 @@ const Sidebar = ({ onFilterChange }) => {
             <Slider
               range
               min={0}
-              max={100}
+              max={1000000}
               value={priceRange}
               onChange={handlePriceChange}
-              marks={{ 0: '$0', 100: '$100' }}
             />
             <div className="range-values">
               <span>${priceRange[0]}</span> - <span>${priceRange[1]}</span>
+            </div>
+            <div className="price-inputs">
+              <label>
+                Min Price:
+                <input
+                  type="number"
+                  value={lowPrice}
+                  min={0}
+                  max={1000000}
+                  onChange={(e) => {
+                    const newLowPrice = Number(e.target.value);
+                    if (newLowPrice <= highPrice) {
+                      setLowPrice(newLowPrice);
+                      setPriceRange([newLowPrice, highPrice]);
+                    }
+                  }}
+                />
+              </label>
+              <label>
+                Max Price:
+                <input
+                  type="number"
+                  value={highPrice}
+                  min={lowPrice}
+                  max={1000000}
+                  onChange={(e) => {
+                    const newHighPrice = Number(e.target.value);
+                    if (newHighPrice >= lowPrice) {
+                      setHighPrice(newHighPrice);
+                      setPriceRange([lowPrice, newHighPrice]);
+                    }
+                  }}
+                />
+              </label>
             </div>
           </div>
         </div>
@@ -185,6 +280,21 @@ const Sidebar = ({ onFilterChange }) => {
               <li>No colors available</li>
             )}
           </ul>
+        </div>
+        <div className="sidebar__filter">
+          <div className="section-title">
+            <h4>Brand</h4>
+          </div>
+          <div className="dropdown">
+            <Select 
+              isMulti 
+              options={brands} 
+              value={brands.filter(brand => selectedBrands.includes(brand.value))}
+              onChange={handleBrandChange} 
+              className="brand-select"
+              classNamePrefix="select"
+            />
+          </div>
         </div>
         <button onClick={handleFilter} className="btn btn-primary">Apply Filters</button>
       </div>

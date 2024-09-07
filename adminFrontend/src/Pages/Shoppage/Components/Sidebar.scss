@@ -23,6 +23,8 @@
   font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
+  padding: 10px 15px; /* Adjusted padding for better alignment */
+  border: none; /* Removed default border */
 }
 
 .accordion .card-header .btn:hover {
@@ -32,6 +34,24 @@
 .card-body {
   background: #f8f9fa;
   padding: 15px;
+}
+
+.card-body ul {
+  list-style: none; /* Remove default list styling */
+  padding: 0;
+}
+
+.card-body ul li {
+  margin-bottom: 10px; /* Spacing between items */
+}
+
+.card-body ul li label {
+  display: flex;
+  align-items: center;
+}
+
+.card-body ul li input[type="checkbox"] {
+  margin-right: 10px; /* Spacing between checkbox and label text */
 }
 
 .range-values {
@@ -45,6 +65,7 @@
 }
 
 .sidebar__filter .section-title {
+  position: relative;
   margin-bottom: 20px;
 }
 
@@ -52,13 +73,15 @@
   font-size: 18px;
   font-weight: bold;
   color: #333;
+  position: relative; /* Needed for the ::before pseudo-element */
+  padding-bottom: 10px; /* Added space for the underline */
 }
 
 .sidebar__filter .section-title h4::before {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -5px;
+  bottom: 0; /* Adjusted to align with text */
   width: 50px;
   height: 2px;
   background: #007bff;
@@ -73,6 +96,7 @@ button {
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
+  text-align: center; /* Ensures text is centered */
 }
 
 button:hover {
@@ -105,5 +129,36 @@ button:hover {
   .rc-slider-handle {
     width: 20px;
     height: 20px;
+  }
+}
+
+
+
+.price-inputs {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.price-inputs label {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-inputs input {
+  width: 80px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+/* src/Components/Sidebar.scss */
+
+/* Add styles for react-select component */
+.brand-select {
+  .css-yk16xz-control {
+    min-height: 36px;
+  }
+  .css-1wa3eu0 {
+    font-size: 14px;
   }
 }
