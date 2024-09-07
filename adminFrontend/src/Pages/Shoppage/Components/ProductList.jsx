@@ -1,62 +1,17 @@
-import React, { useState, useEffect } from 'react';
+// src/components/ProductList.jsx
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './ProductList.scss';
 
-const ProductList = ({ filters, onAddToCart }) => {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+const ProductList = ({ products, onAddToCart }) => {
   const [quantities, setQuantities] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 3;
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('https://dummyjson.com/products');
-        setProducts(response.data.products);
-        setFilteredProducts(response.data.products);
-      } catch (error) {
-        console.error("Error fetching products", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    let updatedProducts = [...products];
-
-    if (filters.categories.length > 0) {
-      updatedProducts = updatedProducts.filter(product =>
-        filters.categories.includes(product.category)
-      );
-    }
-
-    updatedProducts = updatedProducts.filter(product =>
-      product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1]
-    );
-
-    if (filters.sizes.length > 0) {
-      updatedProducts = updatedProducts.filter(product =>
-        filters.sizes.some(size => product.sizes && product.sizes.includes(size))
-      );
-    }
-
-    if (filters.colors.length > 0) {
-      updatedProducts = updatedProducts.filter(product =>
-        filters.colors.includes(product.color)
-      );
-    }
-
-    setFilteredProducts(updatedProducts);
-    setCurrentPage(1);
-  }, [filters, products]);
-
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const totalPages = Math.ceil(products.length / productsPerPage);
   const startIndex = (currentPage - 1) * productsPerPage;
-  const currentProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+  const currentProducts = products.slice(startIndex, startIndex + productsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);

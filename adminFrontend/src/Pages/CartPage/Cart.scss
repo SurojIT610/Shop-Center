@@ -1,159 +1,136 @@
-/* Cart.scss */
+/* App.css */
 
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #87CEFA; /* Sky blue background for the whole page */
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.content {
+  padding: 20px;
+}
+
+/* Navbar Styles */
+.my-app-navbar {
+  background-color: #343a40;
+  padding: 10px;
+}
+
+.my-app-navbar a {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 15px;
+}
+
+.my-app-navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Footer Styles */
+.my-app-footer {
+  background-color: #343a40;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+/* HomePage Styles */
+.home-page {
+  text-align: center;
+}
+
+.home-page h1 {
+  color: #007bff;
+}
+
+/* ShopPage Styles */
+.shop-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.shop-page .product-card {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shop-page .product-card img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.shop-page .product-card h3 {
+  color: #007bff;
+}
+
+.shop-page .product-card p {
+  color: #6c757d;
+}
+
+/* ProductDetails Styles */
+.product-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-details img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.product-details .price {
+  color: #28a745;
+  font-size: 1.5em;
+}
+
+/* Cart Styles */
+.cart {
+  margin: 20px;
+}
+
+.cart .cart-item {
+  border-bottom: 1px solid #dee2e6;
+  padding: 10px 0;
+}
+
+.cart .cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart .item-name {
+  font-weight: bold;
+}
+
+.cart .item-price {
+  color: #007bff;
+}
+
+.cart .total {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: right;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .shop-page {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  /* Animation for Rainbow Text */
-  @keyframes rainbow {
-    0% { color: #ff0000; }
-    16% { color: #ff7f00; }
-    32% { color: #ffff00; }
-    48% { color: #00ff00; }
-    64% { color: #0000ff; }
-    80% { color: #4b0082; }
-    96% { color: #9400d3; }
-    100% { color: #ff0000; }
+
+  .shop-page .product-card {
+    width: 90%;
   }
-  
-  /* Container */
-  .container {
-    max-width: 1200px;
-  }
-  
-  /* Card Styles */
-  .card {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.2); /* Light transparent white background */
-  }
-  
-  .card-body {
-    padding: 1.5rem;
-  }
-  
-  /* Shopping Cart Section */
-  section {
-    background: rgba(135, 206, 250, 0.5); /* Semi-transparent sky blue background */
-    color: #fff; /* White text color for better contrast */
-    backdrop-filter: blur(8px); /* Blur effect for a frosted glass look */
-    border-radius: 12px; /* Rounded corners for the section */
-    padding: 1rem;
-  }
-  
-  /* Header and Links */
-  .text-body {
-    color: #fff;
-    animation: rainbow 8s infinite linear;
-  }
-  
-  .text-body:hover {
-    color: #e0e0e0;
-  }
-  
-  .card-body a {
-    color: #fff;
-    font-weight: 600;
-    animation: rainbow 8s infinite linear;
-  }
-  
-  .card-body a:hover {
-    color: #f5a623;
-  }
-  
-  /* Items List */
-  .card-img-top {
-    max-width: 80px;
-    border-radius: 8px;
-  }
-  
-  .card-title {
-    font-size: 1.1rem;
-    font-weight: 500;
-  }
-  
-  .card-description {
-    font-size: 0.9rem;
-    color: #d1d1d1;
-  }
-  
-  .card-quantity,
-  .card-price {
-    font-size: 1.1rem;
-    font-weight: 500;
-  }
-  
-  .fas {
-    font-size: 1.3rem;
-  }
-  
-  .fa-trash-alt {
-    color: #fff;
-  }
-  
-  .fa-trash-alt:hover {
-    color: #ff6347;
-  }
-  
-  /* Shipping Details */
-  .bg-primary {
-    background-color: rgba(30, 30, 30, 0.5) !important; /* Transparent dark background */
-  }
-  
-  .text-white {
-    color: #fff !important;
-  }
-  
-  .form-outline {
-    position: relative;
-    margin-bottom: 1.5rem;
-  }
-  
-  .form-control-lg {
-    border-radius: 6px;
-    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
-    color: #fff;
-    border: 1px solid #ddd;
-    padding: 0.75rem 1rem;
-  }
-  
-  .form-label {
-    position: absolute;
-    top: 50%;
-    left: 1rem;
-    transform: translateY(-50%);
-    font-size: 0.875rem;
-    color: #d1d1d1;
-    pointer-events: none;
-    transition: all 0.3s ease;
-  }
-  
-  .form-control:focus ~ .form-label,
-  .form-control:not(:placeholder-shown) ~ .form-label {
-    top: -0.75rem;
-    font-size: 0.75rem;
-    color: #f5a623;
-  }
-  
-  /* Button */
-  .btn-info {
-    background-color: #f5a623;
-    border: none;
-    border-radius: 6px;
-    color: #fff;
-    font-size: 1rem;
-  }
-  
-  .btn-info:hover {
-    background-color: #ff9800;
-  }
-  
-  .btn-info:focus {
-    box-shadow: none;
-  }
-  
+}

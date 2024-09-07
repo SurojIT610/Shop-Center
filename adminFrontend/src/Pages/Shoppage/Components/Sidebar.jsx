@@ -1,3 +1,4 @@
+// src/Components/Sidebar.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Slider from 'rc-slider';
@@ -16,7 +17,7 @@ const Sidebar = ({ onFilterChange }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://dummyjson.com/products'); // Your endpoint URL
+        const response = await axios.get('https://dummyjson.com/products');
         const products = response.data.products;
 
         // Extract unique attributes from products
