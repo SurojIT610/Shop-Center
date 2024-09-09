@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import ProductList from './components/ProductList';
 import { useProducts } from '../../Contexts/ProductContext';
@@ -6,9 +7,10 @@ import './ShopPage.scss';
 
 const ShopPage = () => {
   const { products, loading } = useProducts();
+  const { category } = useParams(); // Get the category from URL params
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [filters, setFilters] = useState({
-    categories: [],
+    categories: category ? [category] : [], // Set category from URL
     tags: {},
     priceRange: [0, 100000000],
     sizes: [],
@@ -68,7 +70,10 @@ const ShopPage = () => {
   }, [filters, products, loading]);
 
   const handleFilterChange = (newFilters) => {
-    setFilters(newFilters);
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      ...newFilters
+    }));
   };
 
   const handleAddToCart = (product) => {
