@@ -1,4 +1,3 @@
-// src/Components/Sidebar.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Slider from 'rc-slider';
@@ -12,7 +11,7 @@ const Sidebar = ({ onFilterChange }) => {
   const [colors, setColors] = useState([]);
   const [brands, setBrands] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedTags, setSelectedTags] = useState({}); // Changed to store tags per category
+  const [selectedTags, setSelectedTags] = useState({});
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
@@ -110,16 +109,6 @@ const Sidebar = ({ onFilterChange }) => {
   };
 
   const handleFilter = () => {
-    console.log("Applying Filters:");
-    console.log({
-      categories: selectedCategories,
-      tags: selectedTags,
-      priceRange,
-      sizes: selectedSizes,
-      colors: selectedColors,
-      brands: selectedBrands
-    });
-
     onFilterChange({
       categories: selectedCategories,
       tags: selectedTags,
@@ -192,111 +181,69 @@ const Sidebar = ({ onFilterChange }) => {
             <Slider
               range
               min={0}
-              max={1000000}
+              max={10000}
               value={priceRange}
               onChange={handlePriceChange}
+              step={1}
             />
-            <div className="range-values">
-              <span>${priceRange[0]}</span> - <span>${priceRange[1]}</span>
-            </div>
-            <div className="price-inputs">
-              <label>
-                Min Price:
-                <input
-                  type="number"
-                  value={lowPrice}
-                  min={0}
-                  max={1000000}
-                  onChange={(e) => {
-                    const newLowPrice = Number(e.target.value);
-                    if (newLowPrice <= highPrice) {
-                      setLowPrice(newLowPrice);
-                      setPriceRange([newLowPrice, highPrice]);
-                    }
-                  }}
-                />
-              </label>
-              <label>
-                Max Price:
-                <input
-                  type="number"
-                  value={highPrice}
-                  min={lowPrice}
-                  max={1000000}
-                  onChange={(e) => {
-                    const newHighPrice = Number(e.target.value);
-                    if (newHighPrice >= lowPrice) {
-                      setHighPrice(newHighPrice);
-                      setPriceRange([lowPrice, newHighPrice]);
-                    }
-                  }}
-                />
-              </label>
+            <div className="range-slider">
+              <div className="price-input">
+                <input type="number" value={lowPrice} readOnly />
+                <span>-</span>
+                <input type="number" value={highPrice} readOnly />
+              </div>
             </div>
           </div>
         </div>
-        <div className="sidebar__filter">
+        <div className="sidebar__sizes">
           <div className="section-title">
-            <h4>Size</h4>
+            <h4>Shop by sizes</h4>
           </div>
-          <ul>
-            {sizes.length > 0 ? (
-              sizes.map((size, index) => (
-                <li key={index}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={selectedSizes.includes(size)}
-                      onChange={() => handleSizeChange(size)}
-                    />
-                    {size}
-                  </label>
-                </li>
-              ))
-            ) : (
-              <li>No sizes available</li>
-            )}
-          </ul>
-        </div>
-        <div className="sidebar__filter">
-          <div className="section-title">
-            <h4>Color</h4>
-          </div>
-          <ul>
-            {colors.length > 0 ? (
-              colors.map((color, index) => (
-                <li key={index}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={selectedColors.includes(color)}
-                      onChange={() => handleColorChange(color)}
-                    />
-                    {color}
-                  </label>
-                </li>
-              ))
-            ) : (
-              <li>No colors available</li>
-            )}
-          </ul>
-        </div>
-        <div className="sidebar__filter">
-          <div className="section-title">
-            <h4>Brand</h4>
-          </div>
-          <div className="dropdown">
-            <Select 
-              isMulti 
-              options={brands} 
-              value={brands.filter(brand => selectedBrands.includes(brand.value))}
-              onChange={handleBrandChange} 
-              className="brand-select"
-              classNamePrefix="select"
-            />
+          <div className="sizes__list">
+            {sizes.map(size => (
+              <label key={size}>
+                <input
+                  type="checkbox"
+                  checked={selectedSizes.includes(size)}
+                  onChange={() => handleSizeChange(size)}
+                />
+                {size}
+              </label>
+            ))}
           </div>
         </div>
-        <button onClick={handleFilter} className="btn btn-primary">Apply Filters</button>
+        <div className="sidebar__colors">
+          <div className="section-title">
+            <h4>Shop by colors</h4>
+          </div>
+          <div className="colors__list">
+            {colors.map(color => (
+              <label key={color}>
+                <input
+                  type="checkbox"
+                  checked={selectedColors.includes(color)}
+                  onChange={() => handleColorChange(color)}
+                />
+                {color}
+              </label>
+            ))}
+          </div>
+        </div>
+        <div className="sidebar__brands">
+          <div className="section-title">
+            <h4>Shop by brands</h4>
+          </div>
+          <Select
+            isMulti
+            options={brands}
+            onChange={handleBrandChange}
+          />
+        </div>
+        <div className="sidebar__filter-btn">
+          <button className="primary-btn" onClick={handleFilter}>
+            Apply Filters
+          </button>
+        </div>
       </div>
     </div>
   );

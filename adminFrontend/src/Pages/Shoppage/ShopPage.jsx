@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import ProductList from './components/ProductList';
 import { useProducts } from '../../Contexts/ProductContext';
 import './ShopPage.scss';
 
 const ShopPage = () => {
-  const { category } = useParams(); // Get category from URL
   const { products, loading } = useProducts();
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [filters, setFilters] = useState({
     categories: [],
-    priceRange: [0, 100],
+    tags: {},
+    priceRange: [0, 100000000],
     sizes: [],
-    colors: []
+    colors: [],
+    brands: []
   });
   const [cartItems, setCartItems] = useState([]);
 
@@ -21,44 +21,52 @@ const ShopPage = () => {
     if (!loading) {
       let updatedProducts = [...products];
 
-      // Debugging logs
-      console.log('Category from URL:', category);
-      console.log('All Products:', products);
-
-      if (category) {
-        // Filter products by category from URL
-        updatedProducts = updatedProducts.filter(product => product.category === category);
-      }
-
-      // Apply additional filters
+      // Apply category filters
       if (filters.categories.length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           filters.categories.includes(product.category)
         );
       }
 
+      // Apply tag filters
+      if (Object.keys(filters.tags).length > 0) {
+        updatedProducts = updatedProducts.filter(product =>
+          product.tags.some(tag =>
+            Object.keys(filters.tags).some(cat => filters.tags[cat].includes(tag))
+          )
+        );
+      }
+
+      // Apply price range filter
       updatedProducts = updatedProducts.filter(product =>
         product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1]
       );
 
+      // Apply size filters
       if (filters.sizes.length > 0) {
         updatedProducts = updatedProducts.filter(product =>
-          filters.sizes.some(size => product.sizes && product.sizes.includes(size))
+          filters.sizes.some(size => product.dimensions && Object.values(product.dimensions).includes(size))
         );
       }
 
+      // Apply color filters
       if (filters.colors.length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           filters.colors.includes(product.color)
         );
       }
 
-      console.log('Filtered Products:', updatedProducts);
-      
+      // Apply brand filters
+      if (filters.brands.length > 0) {
+        updatedProducts = updatedProducts.filter(product =>
+          filters.brands.includes(product.brand)
+        );
+      }
+
       setFilteredProducts(updatedProducts);
     }
-  }, [category, filters, products, loading]);
-  
+  }, [filters, products, loading]);
+
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
   };
