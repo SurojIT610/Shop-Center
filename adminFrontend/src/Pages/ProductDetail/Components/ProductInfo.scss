@@ -54,3 +54,24 @@
     }
   }
   
+
+  .product__details__button {
+    .cart-btn {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+      position: relative;
+      z-index: 1;
+  
+      &:hover {
+        background-color: #444;
+      }
+    }
+  }
+
+  

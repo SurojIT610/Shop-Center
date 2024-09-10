@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ProductProvider } from './Contexts/ProductContext'; // Ensure correct path
@@ -21,7 +20,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/shop/:category" element={<ShopPage />} /> 
-          <Route path="/product-details/:productId" element={<ProductDetails />} />
+          <Route path="/products/:productId" element={<ProductDetails />} />
           <Route path="/my-cart" element={<Cart />} />
         </Routes>
       </div>

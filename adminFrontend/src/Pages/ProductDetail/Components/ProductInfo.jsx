@@ -1,5 +1,5 @@
-// src/components/ProductInfo.jsx
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './ProductInfo.scss';
@@ -19,6 +19,23 @@ const ProductInfo = ({ product }) => {
 
   const handleColorChange = (color) => {
     setSelectedColor(color);
+  };
+
+  const handleAddToCart = () => {
+    Swal.fire({
+      title: 'Added to Cart!',
+      text: `${product.title} has been added to your cart.`,
+      icon: 'success',
+      confirmButtonText: 'Cool',
+      confirmButtonColor: '#3085d6',
+      backdrop: `
+        rgba(0,0,123,0.4)
+        url("https://cdn.dribbble.com/users/487306/screenshots/2663142/_______.gif")
+        center top
+        no-repeat
+      `,
+      allowOutsideClick: false
+    });
   };
 
   if (!product) {
@@ -62,9 +79,12 @@ const ProductInfo = ({ product }) => {
             </button>
           </div>
         </div>
-        <a href="#" className="cart-btn btn btn-dark">
+        <button
+          className="cart-btn btn btn-dark"
+          onClick={handleAddToCart}
+        >
           <span className="icon_bag_alt"></span> Add to cart
-        </a>
+        </button>
         <ul className="list-unstyled d-flex">
           <li>
             <a href="#"><span className="icon_heart_alt"></span></a>

@@ -1,136 +1,151 @@
-/* App.css */
-
-/* General Styles */
+// General Styles
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f1f1f1;
   color: #333;
 }
 
-.content {
-  padding: 20px;
+// Container Styles
+.h-custom {
+  height: 100vh;
 }
 
-/* Navbar Styles */
-.my-app-navbar {
-  background-color: #343a40;
-  padding: 10px;
+// Card Styles
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
-.my-app-navbar a {
-  color: #ffffff;
+.card-body {
+  padding: 1.5rem;
+}
+
+// Shopping Cart Header Styles
+.card-header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-header a {
+  color: #fff;
   text-decoration: none;
-  margin: 0 15px;
+  font-weight: bold;
 }
 
-.my-app-navbar a:hover {
+.card-header a:hover {
   text-decoration: underline;
 }
 
-/* Footer Styles */
-.my-app-footer {
-  background-color: #343a40;
-  color: #ffffff;
-  text-align: center;
-  padding: 10px;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-}
-
-/* HomePage Styles */
-.home-page {
-  text-align: center;
-}
-
-.home-page h1 {
-  color: #007bff;
-}
-
-/* ShopPage Styles */
-.shop-page {
+// Shopping Cart Items Styles
+.cart-item {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.shop-page .product-card {
-  background-color: #ffffff;
-  border: 1px solid #dee2e6;
-  border-radius: 5px;
-  margin: 10px;
-  padding: 15px;
-  width: 300px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.shop-page .product-card img {
-  max-width: 100%;
-  border-radius: 5px;
-}
-
-.shop-page .product-card h3 {
-  color: #007bff;
-}
-
-.shop-page .product-card p {
-  color: #6c757d;
-}
-
-/* ProductDetails Styles */
-.product-details {
-  display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd;
 }
 
-.product-details img {
-  max-width: 100%;
-  border-radius: 5px;
-}
-
-.product-details .price {
-  color: #28a745;
-  font-size: 1.5em;
-}
-
-/* Cart Styles */
-.cart {
-  margin: 20px;
-}
-
-.cart .cart-item {
-  border-bottom: 1px solid #dee2e6;
-  padding: 10px 0;
-}
-
-.cart .cart-item:last-child {
+.cart-item:last-child {
   border-bottom: none;
 }
 
-.cart .item-name {
-  font-weight: bold;
+.cart-item img {
+  border-radius: 5px;
+  max-width: 80px;
+  object-fit: cover;
 }
 
-.cart .item-price {
-  color: #007bff;
+.cart-item-info {
+  flex: 1;
+  margin-left: 1rem;
 }
 
-.cart .total {
-  font-size: 1.2em;
-  font-weight: bold;
-  text-align: right;
+.cart-item-info h5 {
+  margin: 0;
+  font-size: 1rem;
 }
 
-/* Responsive Styles */
+.cart-item-info p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cart-item-actions h5 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.cart-item-actions a {
+  color: #dc3545;
+  margin-left: 1rem;
+}
+
+.cart-item-actions a:hover {
+  color: #c82333;
+}
+
+// Shipping Details Styles
+.shipping-card {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.shipping-card h5 {
+  margin-bottom: 1rem;
+}
+
+.shipping-card input {
+  border: none;
+  border-radius: 5px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #e9ecef;
+  color: #333;
+}
+
+.shipping-card input:focus {
+  outline: none;
+  background-color: #fff;
+}
+
+// Checkout Button Styles
+.checkout-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem;
+  font-size: 1.25rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.checkout-button:hover {
+  background-color: #218838;
+}
+
+// Responsive Styles
 @media (max-width: 768px) {
-  .shop-page {
+  .cart-item {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
-  .shop-page .product-card {
-    width: 90%;
+  .cart-item-actions {
+    margin-top: 1rem;
   }
 }

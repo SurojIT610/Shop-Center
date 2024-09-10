@@ -23,14 +23,13 @@ const ShopPage = () => {
     if (!loading) {
       let updatedProducts = [...products];
 
-      // Apply category filters
+      // Apply filters
       if (filters.categories.length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           filters.categories.includes(product.category)
         );
       }
 
-      // Apply tag filters
       if (Object.keys(filters.tags).length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           product.tags.some(tag =>
@@ -39,26 +38,22 @@ const ShopPage = () => {
         );
       }
 
-      // Apply price range filter
       updatedProducts = updatedProducts.filter(product =>
         product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1]
       );
 
-      // Apply size filters
       if (filters.sizes.length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           filters.sizes.some(size => product.dimensions && Object.values(product.dimensions).includes(size))
         );
       }
 
-      // Apply color filters
       if (filters.colors.length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           filters.colors.includes(product.color)
         );
       }
 
-      // Apply brand filters
       if (filters.brands.length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           filters.brands.includes(product.brand)
@@ -88,12 +83,24 @@ const ShopPage = () => {
     });
   };
 
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
+
   return (
     <div className="shop-page">
       <div className="container">
         <div className="row">
-          <Sidebar onFilterChange={handleFilterChange} />
-          <ProductList products={filteredProducts} filters={filters} onAddToCart={handleAddToCart} />
+          <div className="col-lg-3 col-md-3">
+            <Sidebar onFilterChange={handleFilterChange} />
+          </div>
+          <div className="col-lg-9 col-md-9">
+            {filteredProducts.length === 0 ? (
+              <div className="no-products">No products found</div>
+            ) : (
+              <ProductList products={filteredProducts} onAddToCart={handleAddToCart} />
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+SideBar.scss
+
 .shop__sidebar {
   margin-bottom: 30px;
   background: #f8f9fa;
@@ -161,4 +163,95 @@ button:hover {
   .css-1wa3eu0 {
     font-size: 14px;
   }
+}
+
+
+Shoppage.scss
+
+.shop {
+  padding: 60px 0;
+}
+
+.container {
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+}
+
+.col-lg-3, .col-md-3 {
+  flex: 1;
+}
+
+.col-lg-9, .col-md-9 {
+  flex: 3;
+}
+
+.product__item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 30px;
+  background-color: #fff;
+}
+
+.product__item__pic {
+  position: relative;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+}
+
+.product__item__pic .label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #f00;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.product__item__text {
+  padding: 20px;
+}
+
+.product__price {
+  font-weight: bold;
+}
+
+.product__price span {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.product__item.sale .product__price {
+  color: #f00;
+}
+
+.product__item.stockout .product__item__pic .label {
+  background-color: #bbb;
+}
+
+.pagination__option {
+  margin-top: 30px;
+}
+
+.shop__sidebar .card-heading a {
+  padding: 16px;
+  display: block;
+  font-size: 14px;
+}
+
+.shop__sidebar .card {
+  border: none;
+  border-bottom: 1px solid #c1c1c1;
+  border-radius: 0;
+}
+
+.shop__sidebar .categories__accordion {
+  margin-bottom: 38px;
 }

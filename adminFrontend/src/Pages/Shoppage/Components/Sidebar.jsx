@@ -109,7 +109,16 @@ const Sidebar = ({ onFilterChange }) => {
   };
 
   const handleFilter = () => {
-    onFilterChange({
+    const noFiltersApplied = (
+      selectedCategories.length === 0 &&
+      Object.keys(selectedTags).length === 0 &&
+      selectedSizes.length === 0 &&
+      selectedColors.length === 0 &&
+      selectedBrands.length === 0 &&
+      (priceRange[0] === 0 && priceRange[1] === 1000000)
+    );
+
+    onFilterChange(noFiltersApplied ? {} : {
       categories: selectedCategories,
       tags: selectedTags,
       priceRange,

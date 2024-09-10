@@ -1,4 +1,3 @@
-// src/pages/ProductDetail/ProductDetails.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -12,6 +11,7 @@ const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -20,7 +20,10 @@ const ProductDetails = () => {
         setProduct(productResponse.data);
 
         const relatedResponse = await axios.get(`https://dummyjson.com/products?category=${productResponse.data.category}`);
-        const filteredProducts = relatedResponse.data.products.filter(p => p.id !== productId);
+        const filteredProducts = relatedResponse.data.products
+          .filter(p => p.id !== productId) // Exclude the current product
+          .filter(p => p.category === productResponse.data.category); // Ensure same category
+
         setRelatedProducts(filteredProducts);
       } catch (error) {
         console.error("Error fetching product details", error);
@@ -29,6 +32,18 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [productId]);
+
+  const handleAddToCart = (product) => {
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevItems.map(item =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [...prevItems, { ...product, quantity: 1 }];
+    });
+  };
 
   if (!product) {
     return <div>Loading...</div>;
@@ -54,7 +69,7 @@ const ProductDetails = () => {
               <h5>RELATED PRODUCTS</h5>
             </div>
           </div>
-          <RelatedProducts products={relatedProducts} />
+          <RelatedProducts products={relatedProducts} onAddToCart={handleAddToCart} />
         </div>
       </div>
     </section>
