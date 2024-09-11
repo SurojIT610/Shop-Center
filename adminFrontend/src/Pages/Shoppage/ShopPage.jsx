@@ -22,14 +22,14 @@ const ShopPage = () => {
   useEffect(() => {
     if (!loading) {
       let updatedProducts = [...products];
-
+  
       // Apply filters
       if (filters.categories.length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           filters.categories.includes(product.category)
         );
       }
-
+  
       if (Object.keys(filters.tags).length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           product.tags.some(tag =>
@@ -37,32 +37,32 @@ const ShopPage = () => {
           )
         );
       }
-
+  
       updatedProducts = updatedProducts.filter(product =>
         product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1]
       );
-
+  
       if (filters.sizes.length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           filters.sizes.some(size => product.dimensions && Object.values(product.dimensions).includes(size))
         );
       }
-
+  
       if (filters.colors.length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           filters.colors.includes(product.color)
         );
       }
-
+  
       if (filters.brands.length > 0) {
         updatedProducts = updatedProducts.filter(product =>
           filters.brands.includes(product.brand)
         );
       }
-
+  
       setFilteredProducts(updatedProducts);
     }
-  }, [filters, products, loading]);
+  }, [filters, products, loading, category]);
 
   const handleFilterChange = (newFilters) => {
     setFilters(prevFilters => ({
