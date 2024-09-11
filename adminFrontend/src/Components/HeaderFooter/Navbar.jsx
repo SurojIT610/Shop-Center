@@ -1,11 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import logo from '../../assets/img/logo.png'; // Adjust the path as necessary
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is included
 import 'bootstrap/dist/js/bootstrap.bundle.min'; // Ensure Bootstrap JavaScript is included
+import { useSpring, animated } from '@react-spring/web';
+import Select from 'react-select';
+import './Navbar.scss'; // Make sure to create and style this file
 
 const Navbar = () => {
+  const [categories, setCategories] = useState([]);
+  const [expandedCategory, setExpandedCategory] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [springProps, setSpringProps] = useSpring(() => ({ opacity: 0 }));
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('https://dummyjson.com/products');
+        const products = response.data.products;
+
+        const categoryTagsMap = {};
+
+        products.forEach(product => {
+          const { category, tags } = product;
+          if (category && tags) {
+            if (!categoryTagsMap[category]) {
+              categoryTagsMap[category] = new Set();
+            }
+            tags.forEach(tag => categoryTagsMap[category].add(tag));
+          }
+        });
+
+        const categoriesWithTags = Object.keys(categoryTagsMap).map(category => ({
+          category,
+          tags: Array.from(categoryTagsMap[category])
+        }));
+
+        setCategories(categoriesWithTags);
+        setSpringProps({ opacity: 1 });
+      } catch (error) {
+        console.error("Error fetching products", error);
+      }
+    };
+
+    fetchProducts();
+  }, [setSpringProps]);
+
+  const handleCategoryToggle = (category) => {
+    setExpandedCategory(prev => (prev === category ? null : category));
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -36,30 +86,55 @@ const Navbar = () => {
                 Products
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><Link className="dropdown-item" to="#">Electronics</Link></li>
-                <li className="dropdown-submenu">
-                  <a className="dropdown-item dropdown-toggle" href="#">Submenu</a>
-                  <ul className="dropdown-menu">
-                    <li><Link className="dropdown-item" to="#">Submenu Item 1</Link></li>
-                    <li><Link className="dropdown-item" to="#">Submenu Item 2</Link></li>
-                    <li className="dropdown-submenu">
-                      <a className="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
-                      <ul className="dropdown-menu">
-                        <li><Link className="dropdown-item" to="#">Subsubmenu Item 1</Link></li>
-                        <li><Link className="dropdown-item" to="#">Subsubmenu Item 2</Link></li>
-                      </ul>
-                    </li>
-                  </ul>
+                <li>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                  />
                 </li>
-                <li><Link className="dropdown-item" to="#">Another action</Link></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><Link className="dropdown-item" to="#">Something else here</Link></li>
+                {categories.map(({ category, tags }) => (
+                  <li key={category} className="dropdown-submenu">
+                    <a
+                      className="dropdown-item dropdown-toggle"
+                      href="#"
+                      onClick={() => handleCategoryToggle(category)}
+                    >
+                      {category}
+                    </a>
+                    <ul className={`dropdown-menu ${expandedCategory === category ? 'show' : ''}`}>
+                      {tags.map((tag, index) => (
+                        <li key={index}>
+                          <Link className="dropdown-item" to="#">
+                            {tag}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
               </ul>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/profile">Profile</Link>
             </li>
           </ul>
+
+          {/* Search Icon */}
+          <div className="d-flex ms-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+            <button className="btn btn-outline-light ms-2">
+              <i className="fas fa-search"></i>
+            </button>
+          </div>
 
           {/* Icon Buttons */}
           <ul className="navbar-nav d-flex flex-row gap-3">
@@ -89,25 +164,37 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Custom CSS for nested dropdowns */}
-      <style>
-        {`
-          .dropdown-submenu {
-            position: relative;
-          }
-          .dropdown-submenu .dropdown-menu {
-            top: 0;
-            left: 100%;
-            margin-top: -6px;
-            display: none;
-            position: absolute;
-            z-index: 1000; /* Ensure dropdown is on top */
-          }
-          .dropdown-submenu:hover .dropdown-menu {
-            display: block;
-          }
-        `}
-      </style>
+      {/* Animated Section for Dropdowns */}
+      <animated.div style={springProps}>
+        <style>
+          {`
+            .dropdown-submenu {
+              position: relative;
+            }
+            .dropdown-submenu .dropdown-menu {
+              top: 0;
+              left: 100%;
+              margin-top: -6px;
+              display: none;
+              position: absolute;
+              z-index: 1000; /* Ensure dropdown is on top */
+            }
+            .dropdown-submenu:hover .dropdown-menu {
+              display: block;
+            }
+            .dropdown-menu {
+              transition: opacity 0.3s ease-in-out;
+            }
+            .dropdown-menu.show {
+              display: block;
+              opacity: 1;
+            }
+            .dropdown-menu {
+              opacity: 0;
+            }
+          `}
+        </style>
+      </animated.div>
     </nav>
   );
 };

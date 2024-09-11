@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import ProductList from './components/ProductList';
 import { useProducts } from '../../Contexts/ProductContext';
@@ -7,12 +7,12 @@ import './ShopPage.scss';
 
 const ShopPage = () => {
   const { products, loading } = useProducts();
-  const { category } = useParams(); // Get the category from URL params
+  const { category } = useParams();
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [filters, setFilters] = useState({
-    categories: category ? [category] : [], // Set category from URL
+    categories: category ? [category] : [],
     tags: {},
-    priceRange: [0, 100000000],
+    priceRange: [0, 1000000],
     sizes: [],
     colors: [],
     brands: []
@@ -22,44 +22,54 @@ const ShopPage = () => {
   useEffect(() => {
     if (!loading) {
       let updatedProducts = [...products];
-  
-      // Apply filters
-      if (filters.categories.length > 0) {
-        updatedProducts = updatedProducts.filter(product =>
-          filters.categories.includes(product.category)
-        );
-      }
-  
-      if (Object.keys(filters.tags).length > 0) {
-        updatedProducts = updatedProducts.filter(product =>
-          product.tags.some(tag =>
-            Object.keys(filters.tags).some(cat => filters.tags[cat].includes(tag))
-          )
-        );
-      }
-  
-      updatedProducts = updatedProducts.filter(product =>
-        product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1]
+
+      const noFiltersApplied = (
+        filters.categories.length === 0 &&
+        Object.keys(filters.tags).length === 0 &&
+        filters.sizes.length === 0 &&
+        filters.colors.length === 0 &&
+        filters.brands.length === 0 &&
+        (filters.priceRange[0] === 0 && filters.priceRange[1] === 1000000)
       );
-  
-      if (filters.sizes.length > 0) {
+
+      if (!noFiltersApplied) {
+        if (filters.categories.length > 0) {
+          updatedProducts = updatedProducts.filter(product =>
+            filters.categories.includes(product.category)
+          );
+        }
+
+        if (Object.keys(filters.tags).length > 0) {
+          updatedProducts = updatedProducts.filter(product =>
+            product.tags.some(tag =>
+              Object.keys(filters.tags).some(cat => filters.tags[cat].includes(tag))
+            )
+          );
+        }
+
         updatedProducts = updatedProducts.filter(product =>
-          filters.sizes.some(size => product.dimensions && Object.values(product.dimensions).includes(size))
+          product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1]
         );
+
+        if (filters.sizes.length > 0) {
+          updatedProducts = updatedProducts.filter(product =>
+            filters.sizes.some(size => product.dimensions && Object.values(product.dimensions).includes(size))
+          );
+        }
+
+        if (filters.colors.length > 0) {
+          updatedProducts = updatedProducts.filter(product =>
+            filters.colors.includes(product.color)
+          );
+        }
+
+        if (filters.brands.length > 0) {
+          updatedProducts = updatedProducts.filter(product =>
+            filters.brands.includes(product.brand)
+          );
+        }
       }
-  
-      if (filters.colors.length > 0) {
-        updatedProducts = updatedProducts.filter(product =>
-          filters.colors.includes(product.color)
-        );
-      }
-  
-      if (filters.brands.length > 0) {
-        updatedProducts = updatedProducts.filter(product =>
-          filters.brands.includes(product.brand)
-        );
-      }
-  
+
       setFilteredProducts(updatedProducts);
     }
   }, [filters, products, loading, category]);
@@ -69,6 +79,27 @@ const ShopPage = () => {
       ...prevFilters,
       ...newFilters
     }));
+  };
+
+  const handleTagClick = (category, tag) => {
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      tags: {
+        ...prevFilters.tags,
+        [category]: [tag] // Set filter to the selected tag
+      }
+    }));
+  };
+
+  const handleClearFilters = () => {
+    setFilters({
+      categories: category ? [category] : [],
+      tags: {},
+      priceRange: [0, 1000000],
+      sizes: [],
+      colors: [],
+      brands: []
+    });
   };
 
   const handleAddToCart = (product) => {
@@ -92,7 +123,11 @@ const ShopPage = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-3 col-md-3">
-            <Sidebar onFilterChange={handleFilterChange} />
+            <Sidebar
+              onFilterChange={handleFilterChange}
+              onClearFilters={handleClearFilters}
+              onTagClick={handleTagClick} // Pass the handler to Sidebar
+            />
           </div>
           <div className="col-lg-9 col-md-9">
             {filteredProducts.length === 0 ? (
