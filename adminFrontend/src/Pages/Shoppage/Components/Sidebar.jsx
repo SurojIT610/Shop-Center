@@ -3,11 +3,9 @@ import axios from 'axios';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import Select from 'react-select';
-import { useHistory } from 'react-router-dom';
 import './Sidebar.scss';
 
 const Sidebar = ({ onFilterChange, onClearFilters, onTagClick }) => {
-  const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
@@ -78,7 +76,6 @@ const Sidebar = ({ onFilterChange, onClearFilters, onTagClick }) => {
     setSelectedCategories(prev =>
       prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]
     );
-    history.push(`/shop/${category}`); // Update URL
   };
 
   const handleTagChange = (category, tag) => {
@@ -91,7 +88,6 @@ const Sidebar = ({ onFilterChange, onClearFilters, onTagClick }) => {
   const handleTagClick = (category, tag) => {
     handleTagChange(category, tag);
     onTagClick(category, tag); // Notify parent component of tag click
-    history.push(`/shop/${category}`); // Update URL to reflect selected category
   };
 
   const handleSizeChange = (size) => {
@@ -127,21 +123,17 @@ const Sidebar = ({ onFilterChange, onClearFilters, onTagClick }) => {
       (priceRange[0] === 0 && priceRange[1] === 1000000)
     );
 
-    if (noFiltersApplied) {
-      onClearFilters();
-    } else {
-      onFilterChange({
-        categories: selectedCategories,
-        tags: selectedTags,
-        priceRange,
-        sizes: selectedSizes,
-        colors: selectedColors,
-        brands: selectedBrands
-      });
-    }
+    onFilterChange(noFiltersApplied ? {} : {
+      categories: selectedCategories,
+      tags: selectedTags,
+      priceRange,
+      sizes: selectedSizes,
+      colors: selectedColors,
+      brands: selectedBrands
+    });
   };
 
-  const handleClear = () => {
+  const handleClearFilters = () => {
     setSelectedCategories([]);
     setSelectedTags({});
     setSelectedSizes([]);
@@ -150,91 +142,147 @@ const Sidebar = ({ onFilterChange, onClearFilters, onTagClick }) => {
     setPriceRange([0, 1000000]);
     setLowPrice(0);
     setHighPrice(1000000);
-    onClearFilters();
+    onClearFilters(); // Notify parent component to reset the filters
+  };
+
+  const toggleCategory = (category) => {
+    setExpandedCategory(prevCategory =>
+      prevCategory === category ? null : category
+    );
   };
 
   return (
-    <div className="sidebar">
-      <h4>Filter by Category</h4>
-      <ul className="category-list">
-        {categories.map(({ category, tags }) => (
-          <li key={category}>
-            <div
-              className={`category ${selectedCategories.includes(category) ? 'active' : ''}`}
-              onClick={() => handleCategoryChange(category)}
-            >
-              {category}
+    <>
+      <div className="shop__sidebar">
+        <div className="sidebar__categories">
+          <div className="section-title">
+            <h4>Categories</h4>
+          </div>
+          <div className="accordion" id="accordionCategories">
+            {categories.map(({ category, tags }) => (
+              <div className="card" key={category}>
+                <div className="card-header">
+                  <h5 className="mb-0">
+                    <button
+                      className="btn btn-link"
+                      type="button"
+                      onClick={() => toggleCategory(category)}
+                      aria-expanded={expandedCategory === category}
+                    >
+                      {category}
+                    </button>
+                  </h5>
+                </div>
+                <div
+                  className={`collapse ${expandedCategory === category ? 'show' : ''}`}
+                  aria-labelledby="headingCategories"
+                  data-parent="#accordionCategories"
+                >
+                  <div className="card-body">
+                    <ul>
+                      {tags.map((tag, index) => (
+                        <li key={index}>
+                          <label>
+                            <input
+                              type="checkbox"
+                              checked={selectedTags[category] ? selectedTags[category].includes(tag) : false}
+                              onChange={() => handleTagChange(category, tag)}
+                            />
+                            <a
+                              href="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleTagClick(category, tag); // Handle tag click
+                              }}
+                            >
+                              {tag}
+                            </a>
+                          </label>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="sidebar__filter">
+          <div className="section-title">
+            <h4>Shop by price</h4>
+          </div>
+          <div className="filter-range-wrap">
+            <Slider
+              range
+              min={0}
+              max={10000}
+              value={priceRange}
+              onChange={handlePriceChange}
+              step={1}
+            />
+            <div className="range-slider">
+              <div className="price-input">
+                <input type="number" value={lowPrice} readOnly />
+                <span>-</span>
+                <input type="number" value={highPrice} readOnly />
+              </div>
             </div>
-            {selectedCategories.includes(category) && (
-              <ul className="tag-list">
-                {tags.map(tag => (
-                  <li
-                    key={tag}
-                    className={`tag ${selectedTags[category]?.includes(tag) ? 'active' : ''}`}
-                    onClick={() => handleTagClick(category, tag)}
-                  >
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
-
-      <h4>Filter by Size</h4>
-      <div className="filter-group">
-        {sizes.map(size => (
-          <div key={size} className="size">
-            <input
-              type="checkbox"
-              checked={selectedSizes.includes(size)}
-              onChange={() => handleSizeChange(size)}
-            />
-            <label>{size}</label>
           </div>
-        ))}
-      </div>
-
-      <h4>Filter by Color</h4>
-      <div className="filter-group">
-        {colors.map(color => (
-          <div key={color} className="color">
-            <input
-              type="checkbox"
-              checked={selectedColors.includes(color)}
-              onChange={() => handleColorChange(color)}
-            />
-            <label>{color}</label>
+        </div>
+        <div className="sidebar__sizes">
+          <div className="section-title">
+            <h4>Shop by sizes</h4>
           </div>
-        ))}
+          <div className="sizes__list">
+            {sizes.map(size => (
+              <label key={size}>
+                <input
+                  type="checkbox"
+                  checked={selectedSizes.includes(size)}
+                  onChange={() => handleSizeChange(size)}
+                />
+                {size}
+              </label>
+            ))}
+          </div>
+        </div>
+        <div className="sidebar__colors">
+          <div className="section-title">
+            <h4>Shop by colors</h4>
+          </div>
+          <div className="colors__list">
+            {colors.map(color => (
+              <label key={color}>
+                <input
+                  type="checkbox"
+                  checked={selectedColors.includes(color)}
+                  onChange={() => handleColorChange(color)}
+                />
+                {color}
+              </label>
+            ))}
+          </div>
+        </div>
+        <div className="sidebar__brands">
+          <div className="section-title">
+            <h4>Shop by brands</h4>
+          </div>
+          <Select
+            isMulti
+            options={brands}
+            onChange={handleBrandChange}
+          />
+        </div>
+        <div className="sidebar__filter-btn">
+          <button className="primary-btn" onClick={handleFilter}>
+            Apply Filters
+          </button>
+          <button className="secondary-btn" onClick={handleClearFilters}>
+            Clear Filters
+          </button>
+        </div>
       </div>
-
-      <h4>Filter by Brand</h4>
-      <Select
-        isMulti
-        options={brands}
-        onChange={handleBrandChange}
-        value={brands.filter(brand => selectedBrands.includes(brand.value))}
-      />
-
-      <h4>Filter by Price</h4>
-      <Slider
-        range
-        min={0}
-        max={1000000}
-        value={priceRange}
-        onChange={handlePriceChange}
-      />
-      <div className="price-range">
-        ${lowPrice} - ${highPrice}
-      </div>
-
-      <div className="filter-actions">
-        <button onClick={handleFilter}>Apply Filters</button>
-        <button onClick={handleClear}>Clear Filters</button>
-      </div>
-    </div>
+    </>
   );
 };
 
